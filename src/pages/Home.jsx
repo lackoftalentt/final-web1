@@ -1,6 +1,7 @@
 import { cars } from "../data.js";
 import CarCard from "../components/CarCard.jsx";
 import Icon from "../components/Icon.jsx";
+import HeroMedia from "../components/HeroMedia.jsx";
 
 export default function Home() {
   return (
@@ -21,19 +22,7 @@ export default function Home() {
             Explore the legends <Icon name="diagonal" />
           </a>
         </div>
-        <picture className="hero-motion">
-          <source
-            media="(prefers-reduced-motion: reduce)"
-            srcSet={`${import.meta.env.BASE_URL}images/initiald-last.webp`}
-          />
-          <img
-            src={`${import.meta.env.BASE_URL}images/initiald-once.gif`}
-            alt="A black Mitsubishi Lancer Evolution on a mountain road in Initial D"
-            width="498"
-            height="278"
-            fetchPriority="high"
-          />
-        </picture>
+        <HeroMedia />
         <div className="hero-art-caption">
           <span>
             <span className="status-dot" />

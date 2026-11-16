@@ -1,0 +1,16 @@
+{
+  "url": "https://final-web1-g3gm.vercel.app/",
+  "checked_at": "2026-11-16T15:01:26.166105+00:00",
+  "homepage_http_status": 200,
+  "production_script": ["./assets/index-CrAqPyZO.js"],
+  "original_gif_http_status": 200,
+  "original_gif_content_length": 8055105,
+  "cdn_cache_observed": "HIT",
+  "download_sample": {
+    "received_bytes": 3589395,
+    "time_limit_seconds": 30,
+    "completed": false
+  },
+  "optimized_build_deployed": false,
+  "note": "The live site was checked by HTTP. Optimization was implemented locally; this record does not claim that the MP4 is deployed."
+}

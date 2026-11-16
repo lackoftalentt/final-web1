@@ -73,6 +73,11 @@ function check(name, value = true) {
   });
   const page = await context.newPage();
   const errors = [];
+  const mediaRequests = [];
+  page.on("request", (request) => {
+    if (/\.(gif|mp4)(?:\?|$)/.test(request.url()))
+      mediaRequests.push(request.url());
+  });
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("console", (message) => {
     if (
@@ -98,26 +103,64 @@ function check(name, value = true) {
   await go("/");
   const heroImage = page.locator(".hero-motion img");
   await heroImage.evaluate((image) => image.decode());
+  await page.waitForFunction(
+    () => document.querySelector(".hero-motion video")?.readyState >= 1,
+  );
   check(
-    "hero loads the one-pass GIF",
-    (await heroImage.evaluate((image) => image.currentSrc)).endsWith(
-      "/images/initiald-once.gif",
-    ),
+    "hero uses a muted, inline MP4 with no loop and the original duration",
+    await page
+      .locator(".hero-motion video")
+      .evaluate(
+        (video) =>
+          video.muted &&
+          video.playsInline &&
+          !video.loop &&
+          Math.abs(video.duration - 5.45) < 0.01,
+      ),
+  );
+  const finishedAt = await page.locator(".hero-motion video").evaluate(
+    (video) =>
+      new Promise((resolve, reject) => {
+        if (video.ended) return resolve(video.currentTime);
+        video.addEventListener("ended", () => resolve(video.currentTime), {
+          once: true,
+        });
+        video.addEventListener(
+          "error",
+          () => reject(new Error("Video failed before completing")),
+          { once: true },
+        );
+      }),
+  );
+  await page
+    .locator(".hero-motion video")
+    .waitFor({ state: "detached", timeout: 12000 });
+  check(
+    "one playback ends on the exact original static final frame",
+    Math.abs(finishedAt - 5.45) < 0.01 &&
+      (await heroImage.getAttribute("src")).includes("initiald-last-") &&
+      (await page.locator(".hero-motion").getAttribute("data-playback")) ===
+        "still",
+  );
+  check(
+    "the original heavy GIF is never downloaded",
+    !mediaRequests.some((url) => url.endsWith(".gif")),
   );
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await page.waitForFunction(() =>
-    document
-      .querySelector(".hero-motion img")
-      .currentSrc.endsWith("/images/initiald-last.webp"),
-  );
+  const requestsBeforeReducedMotion = mediaRequests.length;
+  await page.reload();
   await heroImage.evaluate((image) => image.decode());
-  check("reduced motion displays the last frame without animation");
-  await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.waitForFunction(() =>
-    document
-      .querySelector(".hero-motion img")
-      .currentSrc.endsWith("/images/initiald-once.gif"),
+  check(
+    "reduced motion displays the last frame without mounting video",
+    (await page.locator(".hero-motion video").count()) === 0 &&
+      (await heroImage.getAttribute("src")).includes("initiald-last-"),
   );
+  check(
+    "reduced motion does not request the MP4 or GIF",
+    mediaRequests.length === requestsBeforeReducedMotion,
+  );
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.reload();
   check(
     "first visit defaults to dark mode",
     (await page.locator("html").getAttribute("data-theme")) === "dark",
@@ -393,6 +436,34 @@ function check(name, value = true) {
       );
     }
   }
+  const blockedAutoplayPage = await context.newPage();
+  await blockedAutoplayPage.addInitScript(() => {
+    HTMLMediaElement.prototype.play = () =>
+      Promise.reject(new DOMException("Autoplay denied", "NotAllowedError"));
+  });
+  await blockedAutoplayPage.goto(`${url}/#/`);
+  await blockedAutoplayPage
+    .locator('.hero-motion[data-playback="still"]')
+    .waitFor();
+  check(
+    "blocked autoplay falls back to the final image",
+    (await blockedAutoplayPage.locator(".hero-motion video").count()) === 0,
+  );
+  await blockedAutoplayPage.close();
+  const failedVideoPage = await context.newPage();
+  await failedVideoPage.route("**/*.mp4", (route) => route.abort("failed"));
+  await failedVideoPage.goto(`${url}/#/`);
+  await failedVideoPage
+    .locator('.hero-motion[data-playback="still"]')
+    .waitFor();
+  await failedVideoPage
+    .locator(".hero-motion img")
+    .evaluate((image) => image.decode());
+  check(
+    "video network failure keeps a decoded static image",
+    (await failedVideoPage.locator(".hero-motion video").count()) === 0,
+  );
+  await failedVideoPage.close();
   check("no runtime exceptions or React errors", errors.length === 0);
   await fs.writeFile(
     path.join(root, "docs/browser-results.json"),

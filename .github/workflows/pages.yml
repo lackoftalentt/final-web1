@@ -1,15 +1,21 @@
-name: Deploy JDM Legends
+name: Check JDM Legends
 
 on:
   push:
     branches: [main, master]
+  pull_request:
   workflow_dispatch:
+    inputs:
+      deploy_pages:
+        description: Publish to GitHub Pages (optional; production uses Vercel)
+        type: boolean
+        default: false
 
 permissions:
   contents: read
 
 concurrency:
-  group: github-pages
+  group: checks-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -25,11 +31,14 @@ jobs:
       - run: npm test
       - run: npm run build
       - uses: actions/configure-pages@v5
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy_pages
       - uses: actions/upload-pages-artifact@v4
+        if: github.event_name == 'workflow_dispatch' && inputs.deploy_pages
         with:
           path: dist
 
   deploy:
+    if: github.event_name == 'workflow_dispatch' && inputs.deploy_pages
     needs: build
     runs-on: ubuntu-latest
     permissions:

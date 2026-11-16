@@ -156,6 +156,8 @@ def make_report(details, verification, capture):
         missing.append("Completed browser verification")
     if not live:
         missing.append("Publication and the verified live website URL")
+    elif details.get("media_optimization_deployed") is False:
+        missing.append("Deploy the optimized media build to the existing Vercel site")
     if not details.get("work_division_confirmed"):
         missing.append("Team-confirmed work division")
     state = "READY FOR TEAM REVIEW" if not missing else "PROJECT REPORT / FINAL ITEMS PENDING"
@@ -179,7 +181,7 @@ def make_report(details, verification, capture):
         ], [35*mm, 95*mm, 40*mm]), Spacer(1, 6*mm),
         para(details["university"], "ReportSmall"),
     ])
-    artwork = ROOT / "public/images/initiald-last.webp"
+    artwork = ROOT / "assets/source/initiald-last.webp"
     if artwork.exists():
         story.extend([fitted_image(artwork, max_height=84*mm),
                       para("Cover artwork: the exact final frame of the user-provided Initial D animation. This is an artwork asset, not a website screenshot.", "ReportCaption")])
@@ -216,14 +218,14 @@ def make_report(details, verification, capture):
         ["Page modules", "src/pages/Home.jsx, Garage.jsx, Editorial.jsx, Account.jsx and Drive.jsx"],
         ["Reusable interface", "src/components: CarCard, CarArt, Field and Icon"],
         ["Design", "src/styles.css and src/hero.css; local font and image assets in public/"],
-        ["Verification and delivery", "tests/; tools/capture_report.cjs; this report generator; GitHub Pages workflow"],
+        ["Verification and delivery", "tests/; tools/capture_report.cjs; this report generator; Vercel configuration and optional GitHub Pages workflow"],
     ], [39*mm, 131*mm]))
 
     page("4 / Detailed explanation of website", "Pages and navigation.")
     story.append(para("The wordmark returns to Home. The header links to Collection, Culture, Drive Forecast and About Us, and exposes theme and garage controls. Contact is available in the footer. Profile connects guests to Sign Up and Log In. Car cards link to the six detail routes."))
     story.append(grid([
         ["Page / route", "Main content and functional behaviour"],
-        ["Home / #/", "Full-width Initial D GIF, short heading, collection action, featured cars, culture introduction and personal-garage link."],
+        ["Home / #/", "Full-width optimized Initial D video, short heading, collection action, featured cars, culture introduction and personal-garage link."],
         ["Collection / #/cars", "Six cards, live text search, AWD/RWD filter, manufacturer selector, sorting and clear/reset controls."],
         ["Details / #/cars/:id", "Model description, technical story, specifications, save action and related cars. Routes: r34, supra, rx7, nsx, evo and sti."],
         ["Culture / #/culture", "Editorial sections on Japanese performance engineering, driving culture and rally heritage; links to relevant cars."],
@@ -234,12 +236,12 @@ def make_report(details, verification, capture):
         ["Log In / #/login", "Email and password validation, credential comparison and a useful error on failure."],
         ["Profile / #/profile", "User details, personal saved cars, local contact messages and sign out; guest state links to authentication."],
     ], [48*mm, 122*mm]))
-    heading("Static hosting compatibility", "Hash-based routes keep navigation and direct reloads compatible with a static host. Vite's relative base path keeps assets usable inside a GitHub Pages repository subdirectory. No server-side routing or backend API is required for the local simulation.")
+    heading("Static hosting compatibility", "Hash-based routes keep navigation and direct reloads compatible with a static host. The project is hosted on Vercel; relative asset paths also support subdirectory hosting. No server-side routing or backend API is required for the local simulation.")
 
     page("4.1 / Detailed explanation", "Design, responsiveness and motion.")
     heading("Visual system", "Black and graphite establish the default theme; an off-white light theme is available. A restrained lime accent identifies primary actions. Semantic variables control background, surfaces, text, muted text and borders. A local Adwaita Sans variable font, consistent spacing and reusable controls establish a compact visual hierarchy.")
     heading("The Home hero", "The provided Initial D animation fills the desktop hero container. 'Legends. In motion.' is placed over a dark gradient, followed by a short explanation and one collection action. A small lower caption links to the Evolution detail page. On mobile, the animation retains its full width and natural framing while the text continues below it on the same dark surface.")
-    heading("One playback, then a still", "The GIF contains 109 original frames at 50 ms each, totalling 5.45 seconds. Its repeat extension was removed without changing frames or timing. The browser consequently plays the asset once and leaves its ending frame visible. A lossless WebP of that ending frame is selected by the picture element when prefers-reduced-motion is enabled. Theme changes do not replace the image URL.")
+    heading("One playback, then a still", "The supplied GIF was 8,055,105 bytes. It is encoded as a 633,277-byte H.264 MP4 with 109 frames at 20 fps and the original 5.45-second duration. A small WebP preview is preloaded. The muted inline video has no loop; its ended event leaves an exact lossless final-frame WebP visible. Reduced motion skips the video request, while autoplay or media errors fall back to the same still. Content-hashed media files receive long-lived caching on Vercel. The source GIF stays outside the public build.")
     heading("Responsive layouts", "CSS Grid adapts car cards and multi-column editorial/form surfaces. Flexbox aligns controls and shared sections. Breakpoints at 1150, 900, 680 and 370 pixels refine layout and typography. Narrow viewports use a collapsible header menu and a single-column collection. Explicit image dimensions reduce layout movement while assets load.")
     heading("Accessibility and interaction", "Semantic headings, labelled inputs, a skip link, visible focus and accessible button names support navigation. Detail tabs expose tab roles and keyboard navigation. Mobile navigation reports its expanded state and closes after navigation or Escape. Hover and entrance effects use short transitions; reduced-motion rules remove optional CSS animations.")
 
@@ -330,11 +332,11 @@ def make_report(details, verification, capture):
     story.append(grid([
         ["Requirement / points", "Implementation and present evidence"],
         ["Responsiveness / 10", "Grid/Flexbox and narrow-screen navigation. " + ("Captured viewport checks are recorded with the screenshots." if shots else "Actual browser screenshots and layout verification remain pending.")],
-        ["Hosting / 5", "Repository confirmed. " + ("Live URL supplied; verify it before submission." if live else "Not published, as confirmed by the team. A deploy workflow is included.")],
+        ["Hosting / 5", "Repository confirmed. " + ("Published on Vercel at the supplied live URL; homepage HTTP 200 verified. Deploy the optimized media build before the final presentation." if live else "Not published, as confirmed by the team. A deploy workflow is included.")],
         ["Light/dark / 5", "Default dark, a working theme hook, consistent CSS variables, persistence and initial-paint tests."],
         ["Design and UX / 20", "Focused automotive purpose, local images/icons, consistent typography, full-width hero and reusable controls."],
         ["JavaScript / 25", "Local sign-up/login/profile, custom field validation, dynamic search/filtering, saved state and useful empty/error feedback."],
-        ["UI effects / 5", "Button/card transitions and single-play hero GIF; reduced-motion alternatives."],
+        ["UI effects / 5", "Button/card transitions and single-play optimized hero video; reduced-motion alternatives."],
         ["External API / 10", "Open-Meteo fetch with loading, validation, timeout, cancellation, failure and retry. Live status is recorded separately from fixtures."],
         ["Theme cohesion / 10", "Car stories, engineering, garage and Japanese destinations support one automotive theme."],
         ["Presentation / 5", "A two-speaker 4:45 rehearsal plan is prepared. A completed live presentation is not claimed."],
@@ -389,12 +391,16 @@ def make_report(details, verification, capture):
     page("8 / References and project links", "Sources and assets.")
     story.append(link("Code repository, provided by the team", repo))
     story.append(link("Live website", live))
+    if live and details.get("media_optimization_deployed") is False:
+        story.append(para("The supplied Vercel site is live. The local source includes the media optimization; publishing that updated build is still pending.", "ReportSmall"))
     if not live:
         story.append(para("Publication has not yet been completed. No guessed GitHub Pages address is supplied as a live link.", "ReportSmall"))
     heading("Assignment sources", "Final Project Requirements.pdf; Final Project Presentation Guideline UPDATED!!!.pdf. These supplied documents define the website requirements, five mandatory report sections, presentation format, submission formats and naming convention.")
     for label, url in [
         ("Open-Meteo API documentation", "https://open-meteo.com/en/docs"),
         ("Weather data licence", "https://creativecommons.org/licenses/by/4.0/"),
+        ("Vercel configuration", "https://vercel.com/docs/project-configuration/vercel-json"),
+        ("HTML video element", "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video"),
         ("GitHub Pages workflow documentation", "https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages"),
         ("Nissan Heritage / Skyline GT-R", "https://www.nissan-global.com/EN/HERITAGE_COLLECTION/280_skyline_gt-r_v-spec_ii.html"),
         ("Toyota / Supra lineage", "https://www.toyota-global.com/company/history_of_toyota/75years/vehicle_lineage/car/id60006850/index.html"),
@@ -404,7 +410,7 @@ def make_report(details, verification, capture):
         ("Subaru / 1999 Impreza", "https://www.subaru.co.jp/news/archives/99_7_9/09_06.htm/"),
     ]:
         story.append(link(label, url))
-    heading("Asset credits", "The Initial D GIF was supplied by the user. Its original frame data and durations are retained; only looping metadata was removed. The ending-frame WebP is a lossless extraction. Collection illustrations and interface icons are original SVG code. The local Adwaita Sans font is distributed with the SIL Open Font License in public/fonts/OFL.txt.")
+    heading("Asset credits", "The Initial D GIF was supplied by the user and retained as a source asset outside public/. The web animation is a compressed MP4 with the original dimensions, frame count and duration. Its first-frame preview is WebP; the ending-frame WebP is a lossless extraction. Collection illustrations and interface icons are original SVG code. The local Adwaita Sans font is distributed with the SIL Open Font License in public/fonts/OFL.txt.")
     story.append(para("Screenshot provenance, once captured, is recorded in docs/report-captures.json. Images are included only when their file hashes and production-build fingerprint match. Controlled API fixtures are always described as test data.", "ReportSmall"))
 
     pdf = OUTPUT / f"{PREFIX}_Report.pdf"

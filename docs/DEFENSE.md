@@ -33,11 +33,11 @@
 | Требование              | Баллы            | Где показать                                           | Где искать код                                                 |
 | ----------------------- | ---------------- | ------------------------------------------------------ | -------------------------------------------------------------- |
 | 1. Responsiveness       | 10               | Home, Collection и меню на 390/768/1440 px             | styles.css, hero.css, Header в App.jsx                         |
-| 2. Hosting              | 5                | Живой сайт, обновление страницы, ссылки и изображения  | vite.config.js, .github/workflows/pages.yml                    |
+| 2. Hosting              | 5                | Live-сайт Vercel, маршруты и загрузка ассетов          | vercel.json, vite.config.js                                    |
 | 3. Light and Dark Modes | 5                | Переключить тему, перейти на другую страницу, обновить | theme.js, index.html, CSS-переменные                           |
 | 4. Design and UX        | 20               | Главная, каталог, читаемые формы, понятные действия    | hero.css, styles.css, компоненты                               |
 | 5. Enhanced JavaScript  | 25 за весь пункт | Регистрация/вход/профиль, ошибки форм, поиск и фильтры | account.js, validation.js, Account.jsx, Garage.jsx, storage.js |
-| 6. Animated UI Effects  | 5                | Hover, карточки, GIF и уменьшение анимации             | styles.css, Home.jsx, файлы GIF/WebP                           |
+| 6. Animated UI Effects  | 5                | Hover, карточки, однократный ролик и reduced motion    | HeroMedia.jsx, hero.css, styles.css                            |
 | 7. External API         | 10               | Tokyo/Yokohama/Suzuka, загрузка, ошибка и повтор       | Drive.jsx, data.js                                             |
 | 8. Feature Cohesion     | 10               | Объяснить связь каталога, культуры, гаража и погоды    | Editorial.jsx, data.js, переходы между страницами              |
 | 9. Presentation         | 5                | Совместное выступление на 4:30–5:00                    | Сценарий в разделе 15 этого файла                              |
@@ -206,15 +206,15 @@ Context даёт вложенным компонентам доступ к об�
 
 ## 5. Таск 2 Hosting — 5 баллов
 
-### Что требуется до защиты
+**Рабочий сайт:** https://final-web1-g3gm.vercel.app/
 
-Репозиторий команды: **https://github.com/lackoftalentt/final-web1**.
+**Репозиторий:** https://github.com/lackoftalentt/final-web1
 
-В `docs/report-details.json` live-адрес пока не указан. Перед защитой опубликуйте актуальную сборку и проверьте адрес. Не подставляйте предполагаемый GitHub Pages URL как подтверждённый.
+Проект опубликован на **Vercel**. Ответ главной страницы HTTP 200 проверен. Исходники и live-сайт — разные адреса, оба указаны в TXT-файле и отчёте.
 
-В `Links.txt` должны быть **две разные ссылки**: на исходники и на работающий сайт.
+**Текущее различие версий:** опубликованный сайт пока использует исходный тяжёлый GIF. В локальном проекте подготовлено лёгкое MP4-видео. Оптимизированную сборку нужно заново выложить на Vercel, после чего проверить Network и поведение ролика.
 
-### Что именно публикуется
+### Что публикуется
 
 ```bash
 npm ci
@@ -223,9 +223,13 @@ npm run build
 npm run preview
 ```
 
-`npm ci` устанавливает версии из lock-файла. `npm test` запускает тесты. `npm run build` создаёт production-файлы в `dist/`. `npm run preview` позволяет проверить эту сборку локально, но сам по себе не публикует её в интернет.
+npm ci устанавливает версии из lock-файла. npm test запускает тесты. npm run build создаёт production-файлы в dist/. npm run preview проверяет их локально и не является публикацией в интернет.
 
-Файл: `vite.config.js`.
+Настройки Vercel: Framework — Vite, Build Command — npm run build, Output Directory — dist. Если Vercel связан с GitHub, соответствующий push запускает новый деплой; иначе используется тот способ деплоя, которым был опубликован текущий сайт.
+
+### Относительные пути
+
+Файл: vite.config.js.
 
 ```js
 import { defineConfig } from "vite";
@@ -236,79 +240,58 @@ export default defineConfig({
 });
 ```
 
-`base: "./"` делает пути к ассетам относительными. Это важно для размещения проекта в подкаталоге GitHub Pages.
+base: "./" сохраняет относительные пути к ассетам. Маршруты используют hash, поэтому сервер получает запрос к точке входа, а React выбирает нужную страницу.
 
-### Как работает готовый workflow
+### Как настроено кеширование
 
-Файл: `.github/workflows/pages.yml`.
+Файл: vercel.json.
 
-```yaml
-name: Deploy JDM Legends
-
-on:
-  push:
-    branches: [main, master]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-
-concurrency:
-  group: github-pages
-  cancel-in-progress: true
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - run: npm test
-      - run: npm run build
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Publish site
-        id: deployment
-        uses: actions/deploy-pages@v4
+```json
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "headers": [
+    {
+      "source": "/media/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}
 ```
 
-Порядок: checkout → Node.js → установка зависимостей → тесты → сборка → загрузка `dist` → публикация.
+- Имена MP4, WebP, JS и CSS содержат хеш содержимого.
+- Для /media/ и /assets/ задан годовой max-age и immutable.
+- При изменении файла его имя меняется, поэтому старый браузерный кеш не мешает обновлению.
+- HTML не получает годовой immutable-cache.
+- В исходной production-версии CDN уже отдавал GIF с HIT: проблема первого посещения заключалась главным образом в размере 8,06 МБ.
 
-- `build` готовит файлы.
-- `deploy` зависит от успешного `build` через `needs`.
-- `pages: write` и `id-token: write` разрешают workflow выполнить публикацию.
-- `workflow_dispatch` позволяет запустить workflow вручную.
-- `page_url` — результат успешной публикации.
-
-Если в репозиторий переносится содержимое папки `final-project`, вместе с ним нужно перенести скрытую папку `.github` в корень этого репозитория. В настройках Pages выбирается источник GitHub Actions.
+В репозитории также сохранён альтернативный workflow GitHub Pages. Текущий сайт размещён на Vercel, поэтому не нужно говорить, что именно этот workflow опубликовал текущий адрес.
 
 ### Что показать
 
-1. Открыть настоящий live-адрес.
+1. Открыть live-адрес Vercel.
 2. Перейти на детали машины и нажать Refresh.
-3. Проверить, что изображения, шрифт и навигация загружаются.
-4. Отдельно показать репозиторий.
+3. Проверить изображения, шрифт и навигацию.
+4. Отдельно открыть GitHub.
+5. После обновления деплоя показать в Network MP4 около 633 КБ и отсутствие запроса GIF.
 
-**Реплика:** “Vite creates a static production build. GitHub Actions runs our checks, builds the project and deploys the dist folder to GitHub Pages. Hash-based routes keep page reloads compatible with static hosting.”
-
-Если публикация ещё не сделана, прямо скажите об этом. Этот пункт нельзя считать выполненным только из-за наличия YAML-файла.
+**Реплика:** “Our source code is on GitHub, and the production website is hosted on Vercel. Vite builds the dist folder. Content-hashed media files use long-lived caching, while our hash-based routes remain compatible with static hosting.”
 
 ## 6. Таск 3 Light and Dark Modes — 5 баллов
 
@@ -472,7 +455,10 @@ export function useTheme() {
   height: 100%;
 }
 
-.hero-motion img {
+.hero-motion img,
+.hero-motion video {
+  position: absolute;
+  inset: 0;
   display: block;
   width: 100%;
   height: 100%;
@@ -495,7 +481,7 @@ export function useTheme() {
 Нужно понимать:
 
 - `position: relative` задаёт систему координат главного блока.
-- Абсолютно расположенный `picture` заполняет этот блок через `inset: 0`.
+- Абсолютно расположенный медиаконтейнер заполняет этот блок через `inset: 0`.
 - `object-fit: cover` заполняет область картинкой; на некоторых пропорциях часть изображения может обрезаться.
 - Псевдоэлемент `::after` создаёт затемнение.
 - Контент имеет больший `z-index`, поэтому находится поверх изображения и затемнения.
@@ -555,7 +541,7 @@ export function writeStored(key, value) {
 | jdm:filters  | Поиск, привод, производитель, сортировка |
 | jdm:messages | Локальные сообщения                      |
 
-Хранилище зависит от origin: протокола, имени хоста и порта. `localhost:5173`, `127.0.0.1:5173` и опубликованный сайт имеют отдельные данные. Аккаунт, созданный локально, сам по себе не появится на GitHub Pages.
+Хранилище зависит от origin: протокола, имени хоста и порта. `localhost:5173`, `127.0.0.1:5173` и опубликованный сайт имеют отдельные данные. Аккаунт, созданный локально, сам по себе не появится на опубликованном сайте Vercel.
 
 ### 8.2. Связь хранилища с React state
 
@@ -1120,57 +1106,118 @@ function toggleSaved(id) {
 
 `prefers-reduced-motion` отражает системное предпочтение пользователя. В этом режиме отключаются необязательные CSS-анимации и трансформации.
 
-### Как работает наш GIF
+### Как оптимизирован ролик Initial D
 
-Файл: `src/pages/Home.jsx`.
+Исходный GIF занимал **8 055 105 байт**. Веб-версия — **633 277 байт MP4**, почти в **13 раз меньше**. Сохранены 498×278 пикселей, 109 кадров, 20 fps и длительность 5,45 секунды. Кодек использует сжатие с потерями; точный исходный последний кадр отдельно сохранён в lossless WebP.
+
+Файл: src/components/HeroMedia.jsx.
 
 ```jsx
-<picture className="hero-motion">
-  <source
-    media="(prefers-reduced-motion: reduce)"
-    srcSet={`${import.meta.env.BASE_URL}images/initiald-last.webp`}
-  />
-  <img
-    src={`${import.meta.env.BASE_URL}images/initiald-once.gif`}
-    alt="A black Mitsubishi Lancer Evolution on a mountain road in Initial D"
-    width="498"
-    height="278"
-    fetchPriority="high"
-  />
-</picture>
+import { useEffect, useRef, useState } from "react";
+import { HERO_MEDIA } from "../heroMedia.js";
+
+const motionQuery = "(prefers-reduced-motion: reduce)";
+
+export default function HeroMedia() {
+  const [reducedMotion, setReducedMotion] = useState(() =>
+    typeof window !== "undefined" && typeof window.matchMedia === "function"
+      ? window.matchMedia(motionQuery).matches
+      : false,
+  );
+  const [finished, setFinished] = useState(false);
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const preference = window.matchMedia(motionQuery);
+    const update = () => {
+      setReducedMotion(preference.matches);
+      if (preference.matches) setFinished(true);
+    };
+    preference.addEventListener("change", update);
+    return () => preference.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    let active = true;
+    video.muted = true;
+    video.play().catch(() => {
+      if (active) setFinished(true);
+    });
+    return () => {
+      active = false;
+      video.pause();
+    };
+  }, [reducedMotion, finished]);
+
+  return (
+    <div
+      className="hero-motion"
+      data-playback={finished || reducedMotion ? "still" : "video"}
+    >
+      <img
+        src={HERO_MEDIA.last}
+        alt="A black Mitsubishi Lancer Evolution on a mountain road in Initial D"
+        width="498"
+        height="278"
+        fetchPriority="high"
+      />
+      {!reducedMotion && !finished && (
+        <video
+          ref={videoRef}
+          src={HERO_MEDIA.video}
+          poster={HERO_MEDIA.first}
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          width="498"
+          height="278"
+          aria-hidden="true"
+          onEnded={() => setFinished(true)}
+          onError={() => setFinished(true)}
+        />
+      )}
+    </div>
+  );
+}
 ```
 
-`picture` выбирает статичный последний кадр, если включено уменьшение анимации. В обычном режиме загружается `initiald-once.gif`.
+Как объяснить:
 
-В этом GIF **109 кадров по 50 мс: 109 × 50 = 5450 мс**, то есть **5,45 секунды**. Повтор отключён внутри самого файла. Никакого `setInterval` для перелистывания кадров нет.
+1. Небольшое WebP-превью предзагружается из HTML, поэтому главный блок не ждёт загрузки анимации.
+2. В обычном режиме создаётся video с autoPlay, muted и playsInline.
+3. Атрибут loop отсутствует: ролик играет один раз.
+4. onEnded устанавливает finished. Видео удаляется, а под ним уже загружен точный последний кадр.
+5. При reduced motion видео не создаётся и MP4 не скачивается.
+6. Если autoplay запрещён или видео не загрузилось, остаётся статичная картинка.
+7. Cleanup останавливает видео; active защищает от обработки Promise после очистки эффекта.
+8. Изменение темы не сбрасывает finished, поэтому ролик не начинает играть заново.
 
-Вот разовая подготовка ассета; это не код, который выполняется на сайте:
+HERO_MEDIA из src/heroMedia.js содержит пути к файлам с хешами. Это позволяет безопасно кешировать их на длительное время.
 
-```python
-from pathlib import Path
-from PIL import Image
+### Как подготовлен MP4
 
-source = Path("/home/morninginheaven/Downloads/initiald.gif")
-data = source.read_bytes()
-loop_extension = b"\x21\xff\x0bNETSCAPE2.0\x03\x01\x00\x00\x00"
+Разовая команда кодирования:
 
-assert data.count(loop_extension) == 1
-Path("public/images/initiald-once.gif").write_bytes(
-    data.replace(loop_extension, b"", 1)
-)
-
-with Image.open("public/images/initiald-once.gif") as image:
-    image.seek(image.n_frames - 1)
-    image.convert("RGB").save(
-        "public/images/initiald-last.webp", lossless=True
-    )
+```bash
+ffmpeg -ignore_loop 1 -i assets/source/initiald.gif -an \
+  -c:v libx264 -preset slow -crf 21 -pix_fmt yuv420p \
+  -movflags +faststart initiald.mp4
 ```
 
-Этот пример относится к предоставленному файлу с проверенным расширением повтора. Это не универсальный конвертер любых GIF.
+Полностью воспроизводимая подготовка ассетов:
 
-В браузере после одного прохода остаётся последний кадр. У `img` нет рабочего HTML-атрибута `loop` для управления GIF: повтор задаётся в данных изображения.
+```bash
+python tools/optimize_hero.py
+```
 
-**Реплика:** “The effects are short and support the interaction. The hero GIF plays once, then stays on its last frame. Users who prefer reduced motion see that static frame immediately.”
+Исходный GIF хранится в assets/source и не копируется в dist. Скрипт создаёт MP4, превью и последний кадр, рассчитывает хеши имён, обновляет src/heroMedia.js, предзагрузки HTML и docs/media-optimization.json.
+
+-an убирает аудио. CRF управляет соотношением качества и размера. +faststart переносит метаданные MP4 в начало файла, чтобы браузер мог начать воспроизведение до получения всего видео.
+
+**Реплика:** “The original animation was about eight megabytes. We converted it to a much smaller MP4, preload a static preview and play it once without sound. When playback ends, the exact original final frame remains visible. Reduced-motion users receive only the static image.”
 
 ## 10. Таск 7 External API Integration — 10 баллов
 
@@ -1417,7 +1464,7 @@ npm run report
 
 Браузерные проверки проверяют реальные клики, формы, темы и размеры экрана. Отчёт использует настоящие PNG-снимки; для них записываются контрольные суммы и fingerprint сборки.
 
-На момент подготовки этого материала прошли **16 тестов логики/рендеринга** и **105 браузерных проверок**. Для отчёта снято **26 реальных состояний страниц**, включая мобильные варианты и формы; отдельно успешно проверен живой запрос к Open-Meteo. Эти результаты относятся к проверенной локальной сборке и не заменяют проверку опубликованного сайта перед выступлением.
+На момент подготовки этого материала прошли **16 тестов логики/рендеринга** и **110 браузерных проверок**. Для отчёта снято **26 реальных состояний страниц**, включая мобильные варианты и формы; отдельно успешно проверен живой запрос к Open-Meteo. Эти результаты относятся к проверенной локальной сборке и не заменяют проверку опубликованного сайта перед выступлением.
 
 **Реплика:** “We separate page components, reusable UI, data and business logic. The shared validation and account helpers are testable, and Vite produces a reproducible static build.”
 
@@ -1486,7 +1533,7 @@ npm run report
 
 ### Beibarys Главная и тема
 
-> “I implemented the remaining pages and shared functionality. The homepage uses a full-width Initial D animation with a short heading and one main action. It plays once and stays on the last frame. The theme toggle changes the complete palette and remembers the choice across pages and reloads.”
+> “I implemented the remaining pages and shared functionality. The homepage uses a full-width Initial D animation with a short heading and one main action. The optimized MP4 plays once and stays on the last frame. The theme toggle changes the complete palette and remembers the choice across pages and reloads.”
 
 ### Beibarys Каталог
 
@@ -1636,8 +1683,8 @@ location.reload();
 | После установки dark default всё ещё светло              | Сохранённый выбор пользователя имеет приоритет. Нажмите переключатель.                                                             |
 | После смены порта аккаунт исчез                          | Другой origin имеет отдельный localStorage. Вернитесь на тот же хост и порт.                                                       |
 | API показывает ошибку                                    | Проверьте Offline в DevTools и интернет, затем Try again. Объясните обработку ошибки; при необходимости покажите резервный снимок. |
-| GIF не повторяется                                       | Это требуемое поведение. Файл настроен на один проход.                                                                             |
-| GIF сразу статичный                                      | Возможно, включён prefers-reduced-motion: выбирается WebP последнего кадра.                                                        |
+| Ролик не повторяется                                     | Это требуемое поведение. У video нет loop; после ended показан последний кадр.                                                     |
+| Ролик сразу статичный                                    | Возможны reduced motion, запрет autoplay или ошибка видео: остаётся WebP последнего кадра.                                         |
 | Аккаунты не работают после открытия HTML двойным щелчком | Запустите через npm run dev и откройте localhost. Для Web Crypto нужен подходящий secure context, например localhost или HTTPS.    |
 | Поиск уже отфильтрован                                   | Настройки сохраняются. Нажмите Reset filters.                                                                                      |
 | Контактное сообщение не пришло на почту                  | Писем нет: это явная локальная симуляция.                                                                                          |
@@ -1688,7 +1735,7 @@ JDM_Legends_SE2516_Links.txt
 6. **Search:** controlled input → filter → sort → map.
 7. **Garage:** ID машин разделены по владельцам.
 8. **API:** loading → fetch → проверка → success/error → retry; cleanup отменяет старое.
-9. **GIF:** один цикл в файле, последний кадр; reduced motion — WebP.
+9. **Ролик:** MP4 без loop, onEnded показывает последний кадр; reduced motion — WebP.
 10. **Hosting:** repository и live — разные ссылки; публикуется dist.
 11. **Roles:** Dastan — About/Culture/Profile; Beibarys — остальные страницы и функции.
 12. **Timing:** показать работающий сайт за 4:30–5:00; подробный код оставить для вопросов.

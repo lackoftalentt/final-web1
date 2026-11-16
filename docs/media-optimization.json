@@ -1,0 +1,12 @@
+{
+  "original_gif_bytes": 8055105,
+  "video_bytes": 633277,
+  "frames": 109,
+  "duration_seconds": 5.45,
+  "encoding": "H.264, CRF 21, yuv420p, MP4 faststart; audio omitted",
+  "files": {
+    "video": "initiald-8bc9d2d3899d.mp4",
+    "first": "initiald-first-2ecbf9dc4fb2.webp",
+    "last": "initiald-last-d46ce5ee4e22.webp"
+  }
+}

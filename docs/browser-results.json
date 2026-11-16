@@ -1,8 +1,11 @@
 {
   "status": "passed",
   "checks": [
-    "hero loads the one-pass GIF",
-    "reduced motion displays the last frame without animation",
+    "hero uses a muted, inline MP4 with no loop and the original duration",
+    "one playback ends on the exact original static final frame",
+    "the original heavy GIF is never downloaded",
+    "reduced motion displays the last frame without mounting video",
+    "reduced motion does not request the MP4 or GIF",
     "first visit defaults to dark mode",
     "dark theme paints both the page and its text",
     "switching themes updates the root, body, and inherited text",
@@ -105,6 +108,8 @@
     "form controls are labeled: /signup at 320px",
     "no horizontal page overflow: /profile at 320px",
     "form controls are labeled: /profile at 320px",
+    "blocked autoplay falls back to the final image",
+    "video network failure keeps a decoded static image",
     "no runtime exceptions or React errors"
   ],
   "errors": [],
