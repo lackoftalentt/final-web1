@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-11-16T12:05:16.211942+00:00",
+  "commands": [
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "output": "\u2714 registration and login use normalized email and salted stored credentials (15.044705ms)\n\u2714 registration exposes a useful storage failure (1.468729ms)\n\u2714 every route renders a unique primary heading without throwing (148.181259ms)\n\u2714 authentication and contact forms disable browser validation and expose labels (8.182598ms)\n\u2714 a signed-in profile renders stored details and its own garage (9.666785ms)\n\u2714 initial paint and React agree on default, saved, and invalid themes (7.722149ms)\n\u2714 blocked storage still starts with the dark theme (1.216894ms)\n\u2714 registration accepts valid details and does not mutate input (2.199777ms)\n\u2714 blank and whitespace-only required fields have individual errors (0.288694ms)\n\u2714 invalid email formats are rejected without native validation (0.376019ms)\n\u2714 phone validation rejects letters and out-of-range digit counts (0.250953ms)\n\u2714 password rules enforce all four character classes and length (0.388532ms)\n\u2714 login validates credentials fields without requiring signup fields (0.400014ms)\n\u2714 contact validates phone, topic, and meaningful message (0.560797ms)\n\u2714 password hashes are deterministic, salted, and not plaintext (18.196497ms)\n\u2714 local storage handles corrupt JSON and blocked access (0.860923ms)\n\u2139 tests 16\n\u2139 suites 0\n\u2139 pass 16\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 339.122247\nnpm notice run jdm-legends-final-project@1.0.0 test\nnpm notice run node --test tests/*.test.js\n"
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0,
+      "output": "vite v6.4.6 building for production...\ntransforming...\n\u2713 44 modules transformed.\nrendering chunks...\ncomputing gzip size...\ndist/index.html                   1.13 kB \u2502 gzip:  0.62 kB\ndist/assets/index-CTJ40Pez.css   40.07 kB \u2502 gzip:  8.67 kB\ndist/assets/index-CrAqPyZO.js   277.16 kB \u2502 gzip: 87.24 kB\n\u2713 built in 1.33s\nnpm notice run jdm-legends-final-project@1.0.0 build\nnpm notice run vite build\n"
+    }
+  ],
+  "passed": true,
+  "build_fingerprint": "f156830360a3a31ccd5f96b36b1ac61d123a27eb0f4f0c9cdd376931e19c3791"
+}

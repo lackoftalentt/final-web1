@@ -1,0 +1,21 @@
+{
+  "title": "JDM Legends",
+  "tagline": "Legends. In motion.",
+  "team": "letsgo",
+  "group": "SE-2516",
+  "university": "Astana IT University",
+  "repository_url": "https://github.com/lackoftalentt/final-web1",
+  "live_url": "",
+  "hosting_status": "Not published; confirmed by the team.",
+  "work_division_confirmed": true,
+  "members": [
+    {
+      "name": "Dastan",
+      "responsibilities": "Implemented the About Us, Culture, and Profile pages."
+    },
+    {
+      "name": "Beibarys",
+      "responsibilities": "Implemented all remaining pages and functionality: Home, Collection, car detail pages, Drive Forecast, Contact, Sign Up and Log In; shared layout and navigation, styling and responsive behaviour, themes, search and filtering, local authentication and persistence, validation, API integration, animation and project setup."
+    }
+  ]
+}

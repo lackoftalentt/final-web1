@@ -1,0 +1,544 @@
+{
+  "status": "passed",
+  "captured_at": "2026-11-16T12:05:18.916Z",
+  "method": "Playwright Chromium screenshots of the production build",
+  "images": [
+    {
+      "id": "home-dark",
+      "title": "Home: full-width Initial D hero after its single playback",
+      "path": "docs/screenshots/report/home-dark.png",
+      "route": "/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "94e9ca1460217c70ee9e2c39d7dcc661e6d69a43940e59d9c1c4ddeccad92853"
+    },
+    {
+      "id": "home-light",
+      "title": "Home: the selected light theme",
+      "path": "docs/screenshots/report/home-light.png",
+      "route": "/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light",
+      "sha256": "4d09252068635795e9ba11c94ae366c7fdf0da86084dea7c9347e3f25a0d247a"
+    },
+    {
+      "id": "collection",
+      "title": "Collection: manufacturer, drivetrain, sorting and search controls",
+      "path": "docs/screenshots/report/collection.png",
+      "route": "/cars",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "461c3e8b36c685d6bf851a63de4d67439ef76d9848b5752e716c2f64dcfe02bd"
+    },
+    {
+      "id": "car-details",
+      "title": "Car details: story and save-to-garage action",
+      "path": "docs/screenshots/report/car-details.png",
+      "route": "/cars/r34",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "8551ddbd01a38d1068daad3bceeaa940719d723f0fed7b350af8b754d94747e0"
+    },
+    {
+      "id": "culture",
+      "title": "Culture: engineering and Japanese automotive heritage",
+      "path": "docs/screenshots/report/culture.png",
+      "route": "/culture",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "b827a329067aaf365dec220acee176cf1083aecbda9cf1a950ab34a0b3ad9b4b"
+    },
+    {
+      "id": "about",
+      "title": "About Us: project purpose and team",
+      "path": "docs/screenshots/report/about.png",
+      "route": "/about",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "d161a08065f561132ca98bffe96f23411018dfad2464cbe9eab7fc59681ee2d2"
+    },
+    {
+      "id": "contact",
+      "title": "Contact: a local demonstration form",
+      "path": "docs/screenshots/report/contact.png",
+      "route": "/contact",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "caff1b4563782a4f26a76d7c1a79dfe0d3d3f5d865248b87515e01c30fe8d9b9"
+    },
+    {
+      "id": "signup",
+      "title": "Sign Up: local account registration",
+      "path": "docs/screenshots/report/signup.png",
+      "route": "/signup",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "2bab3879ee2778df924fd51c4443533c11abe7e428d1d369a07a788a329c7f4b"
+    },
+    {
+      "id": "login",
+      "title": "Log In: returning to a saved profile",
+      "path": "docs/screenshots/report/login.png",
+      "route": "/login",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "17e56842d980c446bd127cb643b7663155fc9d959d94c1ebffba04acac6b3d0a"
+    },
+    {
+      "id": "specifications",
+      "title": "Specifications tab: selected Japanese-market reference figures",
+      "path": "docs/screenshots/report/specifications.png",
+      "route": "/cars/r34",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "ede83e80046b6b03e799117a308b89ef75c0698781e5be38e6c209f006828018",
+      "selector": ".detail-editorial"
+    },
+    {
+      "id": "search",
+      "title": "Live search: rotary returns the Mazda RX-7",
+      "path": "docs/screenshots/report/search.png",
+      "route": "/cars",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "637664e79a9bbb1ab4a09d6c728cd43481af2f4e376a045a099ea82e282bc35a"
+    },
+    {
+      "id": "empty-results",
+      "title": "Combined filters: empty results and a reset action",
+      "path": "docs/screenshots/report/empty-results.png",
+      "route": "/cars",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "7755a3c8d850d97a343e5316ea1a4e4b31bca939b6a1f8fc07bc5e23f99703a6"
+    },
+    {
+      "id": "signup-validation",
+      "title": "JavaScript validation: email, phone, password strength and confirmation",
+      "path": "docs/screenshots/report/signup-validation.png",
+      "route": "/signup",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "c70dcd061e7f9fd99fc958b84f44fcd82d14acfb56c8fac29bb75dd4f0d53574",
+      "selector": "form"
+    },
+    {
+      "id": "profile",
+      "title": "Profile: registered sample user and two saved cars",
+      "path": "docs/screenshots/report/profile.png",
+      "route": "/profile",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "a5aec450cacc4430b78c16263cc0793624ef684a3a0128e417f920ec557c4717"
+    },
+    {
+      "id": "contact-validation",
+      "title": "Contact: required topic and message are validated inline",
+      "path": "docs/screenshots/report/contact-validation.png",
+      "route": "/contact",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "ce0e5faf6ef8860a4bdf35a8180e2dfe01996feb1f953d73976714e3fa4cd674",
+      "selector": "form"
+    },
+    {
+      "id": "contact-saved",
+      "title": "Contact: confirmation explicitly states that the message is saved locally",
+      "path": "docs/screenshots/report/contact-saved.png",
+      "route": "/contact",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "bd8df333db2b7434592a015d45a3852b6a33cb5ac568e72bcc5fffe0b5bd7dd3",
+      "selector": ".contact-form-panel"
+    },
+    {
+      "id": "login-validation",
+      "title": "Log In: incorrect credentials receive an on-page message",
+      "path": "docs/screenshots/report/login-validation.png",
+      "route": "/login",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "dc66ace1801b52493270ff758e503ed4a0de29869f33c0bae7849fd112a264e5",
+      "selector": "form"
+    },
+    {
+      "id": "drive-live",
+      "title": "Drive Forecast: observed response from the live weather service",
+      "path": "docs/screenshots/report/drive-live.png",
+      "route": "/drive",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "ff99544e0aa4ce3d20202e0cf53a03a7c0ede1e5876dff5d359aea7ff2bd351d",
+      "api": "live",
+      "api_observation": "A successful unmodified response was observed from the live Open-Meteo service."
+    },
+    {
+      "id": "drive-error",
+      "title": "API failure: a controlled failed request exposes a retry button",
+      "path": "docs/screenshots/report/drive-error.png",
+      "route": "/drive",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "39b24b504ba9b587a7354f78b6d658dea23c4923b166bad9f5b528ecce01495b",
+      "api": "controlled-error"
+    },
+    {
+      "id": "drive-loading",
+      "title": "API loading state while a controlled response is delayed",
+      "path": "docs/screenshots/report/drive-loading.png",
+      "route": "/drive",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "9c65bb5fdb5e7a72dd617178d8ad56b6ec00ebc2f91457d52ebfb412d69a3450",
+      "api": "controlled-loading"
+    },
+    {
+      "id": "drive-controlled",
+      "title": "API success interface with controlled test data, not live weather",
+      "path": "docs/screenshots/report/drive-controlled.png",
+      "route": "/drive",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "e8001234f99f03d3dee158afd1b2e6d87c0f35aedfc2db2c97f96d0b3a748667",
+      "api": "fixture"
+    },
+    {
+      "id": "home-768",
+      "title": "Home: tablet viewport, 768px wide",
+      "path": "docs/screenshots/report/home-768.png",
+      "route": "/",
+      "viewport": {
+        "width": 768,
+        "height": 1000
+      },
+      "theme": "dark",
+      "sha256": "6543267a978d5b01479d251ef46c892bc058f0685e052fe8c7f28d64354ad433"
+    },
+    {
+      "id": "home-390",
+      "title": "Home: mobile viewport, 390px wide",
+      "path": "docs/screenshots/report/home-390.png",
+      "route": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "sha256": "90e2eeddf6e475fc198d6bd0c16a74b1472cc09063af2971ee06e7bb4fda0aed"
+    },
+    {
+      "id": "mobile-navigation",
+      "title": "Mobile navigation: expanded menu",
+      "path": "docs/screenshots/report/mobile-navigation.png",
+      "route": "/",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "sha256": "fd340e56aef1a4aecb03a931bea670edcacf9230e12669beed311f91facc330c"
+    },
+    {
+      "id": "collection-mobile",
+      "title": "Collection: single-column mobile layout",
+      "path": "docs/screenshots/report/collection-mobile.png",
+      "route": "/cars",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "sha256": "c25e5a2beaf3901e3260d73a64513e2f52b0696c8f2d9d722540da5efdcbccad"
+    },
+    {
+      "id": "contact-mobile",
+      "title": "Contact: labelled inputs in a narrow viewport",
+      "path": "docs/screenshots/report/contact-mobile.png",
+      "route": "/contact",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "dark",
+      "sha256": "1bd33214015945227965dc86f3be2242aff090a53f9d603691b6e93d455c451a",
+      "selector": ".contact-form-panel"
+    }
+  ],
+  "runtime_errors": [],
+  "layout_checks": [
+    {
+      "id": "home-dark",
+      "route": "/",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "home-light",
+      "route": "/",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "light",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "collection",
+      "route": "/cars",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "car-details",
+      "route": "/cars/r34",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "culture",
+      "route": "/culture",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "about",
+      "route": "/about",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "contact",
+      "route": "/contact",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "signup",
+      "route": "/signup",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "login",
+      "route": "/login",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "specifications",
+      "route": "/cars/r34",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "search",
+      "route": "/cars",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "empty-results",
+      "route": "/cars",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "signup-validation",
+      "route": "/signup",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "profile",
+      "route": "/profile",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "contact-validation",
+      "route": "/contact",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "contact-saved",
+      "route": "/contact",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "login-validation",
+      "route": "/login",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "drive-live",
+      "route": "/drive",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "drive-error",
+      "route": "/drive",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "drive-loading",
+      "route": "/drive",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "drive-controlled",
+      "route": "/drive",
+      "viewport": 1440,
+      "document_width": 1440,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "home-768",
+      "route": "/",
+      "viewport": 768,
+      "document_width": 768,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "home-390",
+      "route": "/",
+      "viewport": 390,
+      "document_width": 390,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "mobile-navigation",
+      "route": "/",
+      "viewport": 390,
+      "document_width": 390,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "collection-mobile",
+      "route": "/cars",
+      "viewport": 390,
+      "document_width": 390,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    },
+    {
+      "id": "contact-mobile",
+      "route": "/contact",
+      "viewport": 390,
+      "document_width": 390,
+      "theme": "dark",
+      "no_horizontal_overflow": true
+    }
+  ],
+  "live_api": "A successful unmodified response was observed from the live Open-Meteo service.",
+  "build_fingerprint": "f156830360a3a31ccd5f96b36b1ac61d123a27eb0f4f0c9cdd376931e19c3791",
+  "completed_at": "2026-11-16T12:05:47.084Z"
+}
