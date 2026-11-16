@@ -6,7 +6,7 @@
   "university": "Astana IT University",
   "repository_url": "https://github.com/lackoftalentt/final-web1",
   "live_url": "https://final-web1-g3gm.vercel.app/",
-  "hosting_status": "Published on Vercel; production homepage HTTP 200 verified. Media optimization is prepared locally and requires a new deployment.",
+  "hosting_status": "Published on Vercel. Automatic deployment from main verified; production MP4 playback, static final frame, reduced motion and immutable caching passed.",
   "work_division_confirmed": true,
   "members": [
     {
@@ -19,5 +19,5 @@
     }
   ],
   "hosting_provider": "Vercel",
-  "media_optimization_deployed": false
+  "media_optimization_deployed": true
 }

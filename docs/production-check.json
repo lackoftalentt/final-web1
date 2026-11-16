@@ -1,16 +1,45 @@
 {
+  "status": "passed",
   "url": "https://final-web1-g3gm.vercel.app/",
-  "checked_at": "2026-11-16T15:01:26.166105+00:00",
+  "checked_at": "2026-11-16T15:11:26.971Z",
   "homepage_http_status": 200,
-  "production_script": ["./assets/index-CrAqPyZO.js"],
-  "original_gif_http_status": 200,
-  "original_gif_content_length": 8055105,
-  "cdn_cache_observed": "HIT",
-  "download_sample": {
-    "received_bytes": 3589395,
-    "time_limit_seconds": 30,
-    "completed": false
+  "production_script": ["./assets/index-CnIeHAcZ.js"],
+  "media_requests": [
+    "https://final-web1-g3gm.vercel.app/media/initiald-8bc9d2d3899d.mp4"
+  ],
+  "video_settings": {
+    "src": "https://final-web1-g3gm.vercel.app/media/initiald-8bc9d2d3899d.mp4",
+    "muted": true,
+    "loop": false,
+    "playsInline": true
   },
-  "optimized_build_deployed": false,
-  "note": "The live site was checked by HTTP. Optimization was implemented locally; this record does not claim that the MP4 is deployed."
+  "ends_on_static_final_frame": true,
+  "reduced_motion_skips_video": true,
+  "runtime_errors": [],
+  "optimized_build_deployed": true,
+  "video_http": {
+    "url": "https://final-web1-g3gm.vercel.app/media/initiald-8bc9d2d3899d.mp4",
+    "status": 200,
+    "bytes": 633277,
+    "content_type": "video/mp4",
+    "cache_control": "public, max-age=31536000, immutable"
+  },
+  "code_commit_sha": "8a4ecab00f4bbed4c4a0fc7a80c3d58421c740d6",
+  "before_optimization": {
+    "url": "https://final-web1-g3gm.vercel.app/",
+    "checked_at": "2026-11-16T15:01:26.166105+00:00",
+    "homepage_http_status": 200,
+    "production_script": ["./assets/index-CrAqPyZO.js"],
+    "original_gif_http_status": 200,
+    "original_gif_content_length": 8055105,
+    "cdn_cache_observed": "HIT",
+    "download_sample": {
+      "received_bytes": 3589395,
+      "time_limit_seconds": 30,
+      "completed": false
+    },
+    "optimized_build_deployed": false,
+    "note": "The live site was checked by HTTP. Optimization was implemented locally; this record does not claim that the MP4 is deployed."
+  },
+  "continuous_deployment": "GitHub main push automatically deployed by Vercel; verified by commit status and the updated production asset."
 }

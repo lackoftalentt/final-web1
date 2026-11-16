@@ -332,7 +332,7 @@ def make_report(details, verification, capture):
     story.append(grid([
         ["Requirement / points", "Implementation and present evidence"],
         ["Responsiveness / 10", "Grid/Flexbox and narrow-screen navigation. " + ("Captured viewport checks are recorded with the screenshots." if shots else "Actual browser screenshots and layout verification remain pending.")],
-        ["Hosting / 5", "Repository confirmed. " + ("Published on Vercel at the supplied live URL; homepage HTTP 200 verified. Deploy the optimized media build before the final presentation." if live else "Not published, as confirmed by the team. A deploy workflow is included.")],
+        ["Hosting / 5", "Repository confirmed. " + ("Published on Vercel; homepage, optimized MP4, final frame, reduced motion and immutable cache verified. Automatic deployment from GitHub main is configured." if live else "Not published, as confirmed by the team. A deploy workflow is included.")],
         ["Light/dark / 5", "Default dark, a working theme hook, consistent CSS variables, persistence and initial-paint tests."],
         ["Design and UX / 20", "Focused automotive purpose, local images/icons, consistent typography, full-width hero and reusable controls."],
         ["JavaScript / 25", "Local sign-up/login/profile, custom field validation, dynamic search/filtering, saved state and useful empty/error feedback."],

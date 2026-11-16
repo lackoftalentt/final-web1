@@ -212,7 +212,7 @@ Context даёт вложенным компонентам доступ к об�
 
 Проект опубликован на **Vercel**. Ответ главной страницы HTTP 200 проверен. Исходники и live-сайт — разные адреса, оба указаны в TXT-файле и отчёте.
 
-**Текущее различие версий:** опубликованный сайт пока использует исходный тяжёлый GIF. В локальном проекте подготовлено лёгкое MP4-видео. Оптимизированную сборку нужно заново выложить на Vercel, после чего проверить Network и поведение ролика.
+**Production проверен:** сайт уже использует лёгкий MP4 633 277 байт. Подтверждены последний кадр, reduced motion, отсутствие запросов GIF и immutable-cache. Vercel автоматически деплоит push в main; коммит 8a4ecab успешно прошёл этот путь.
 
 ### Что публикуется
 
@@ -225,7 +225,7 @@ npm run preview
 
 npm ci устанавливает версии из lock-файла. npm test запускает тесты. npm run build создаёт production-файлы в dist/. npm run preview проверяет их локально и не является публикацией в интернет.
 
-Настройки Vercel: Framework — Vite, Build Command — npm run build, Output Directory — dist. Если Vercel связан с GitHub, соответствующий push запускает новый деплой; иначе используется тот способ деплоя, которым был опубликован текущий сайт.
+Настройки Vercel: Framework — Vite, Build Command — npm run build, Output Directory — dist. Vercel связан с GitHub. После push в main он автоматически собирает и публикует production; отдельный ручной Redeploy не требуется. GitHub Actions отдельно запускает тесты и сборку.
 
 ### Относительные пути
 
@@ -289,7 +289,7 @@ base: "./" сохраняет относительные пути к ассет�
 2. Перейти на детали машины и нажать Refresh.
 3. Проверить изображения, шрифт и навигацию.
 4. Отдельно открыть GitHub.
-5. После обновления деплоя показать в Network MP4 около 633 КБ и отсутствие запроса GIF.
+5. Показать в Network MP4 около 633 КБ и отсутствие запроса GIF.
 
 **Реплика:** “Our source code is on GitHub, and the production website is hosted on Vercel. Vite builds the dist folder. Content-hashed media files use long-lived caching, while our hash-based routes remain compatible with static hosting.”
 
