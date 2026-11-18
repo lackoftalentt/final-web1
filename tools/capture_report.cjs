@@ -97,6 +97,12 @@ async function startPreview() {
     deviceScaleFactor: 1.5,
   });
   const page = await context.newPage();
+  // Report capture never sends real messages to the owner's Telegram chat.
+  await page.route("**/api/contact", (route) =>
+    route.fulfill({
+      json: { ok: true, deliveredAt: "2026-11-18T12:00:00Z" },
+    }),
+  );
   page.on("pageerror", (error) => manifest.runtime_errors.push(error.message));
   page.setDefaultTimeout(15000);
   const go = async (route) => {
@@ -171,7 +177,7 @@ async function startPreview() {
       "Culture: engineering and Japanese automotive heritage",
     ],
     ["/about", "about", "About Us: project purpose and team"],
-    ["/contact", "contact", "Contact: a local demonstration form"],
+    ["/contact", "contact", "Contact: Telegram delivery form"],
     ["/signup", "signup", "Sign Up: local account registration"],
     ["/login", "login", "Log In: returning to a saved profile"],
   ]) {
@@ -240,7 +246,7 @@ async function startPreview() {
     throw new Error("Saved cars did not survive reload.");
 
   await go("/contact");
-  await page.getByRole("button", { name: "Save message" }).click();
+  await page.getByRole("button", { name: "Send message" }).click();
   await page.locator(".field-error").first().waitFor();
   await shot(
     "contact-validation",
@@ -251,11 +257,11 @@ async function startPreview() {
   await page
     .getByLabel("Your message", { exact: true })
     .fill("My favourite car is the rotary-powered RX-7.");
-  await page.getByRole("button", { name: "Save message" }).click();
+  await page.getByRole("button", { name: "Send message" }).click();
   await page.locator(".contact-success").waitFor();
   await shot(
     "contact-saved",
-    "Contact: confirmation explicitly states that the message is saved locally",
+    "Contact: delivery confirmation with a controlled API response; not proof of live Telegram delivery",
     { selector: ".contact-form-panel" },
   );
 

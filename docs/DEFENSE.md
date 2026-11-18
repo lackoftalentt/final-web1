@@ -1,4 +1,4 @@
-# JDM Legends Подготовка к защите
+# Fujiwara Tofu Shop — подготовка обеих ролей к защите
 
 Команда **letsgo**: **Dastan и Beibarys**, группа **SE-2516**, Astana IT University.
 
@@ -6,12 +6,130 @@
 
 Фрагменты ниже взяты из текущих исходников. Некоторые вырезаны из середины компонента: они нужны для разбора и не являются отдельными готовыми программами. Раздел с тренировочными изменениями явно отделён от уже реализованного кода.
 
+## 0. С чего начать: подготовка обеих ролей
+
+Обновлено 18.11.2026 по двум предоставленным PDF и текущим исходникам. Текущий бренд — **Fujiwara Tofu Shop / 藤原とうふ店（自家用）**; тема проекта по-прежнему — японские автомобили. Старое название **JDM Legends** осталось в исторических файлах сдачи. В выступлении используйте название, которое показано на демонстрируемом сайте; если в отчёте старое название, заранее приведите материалы к одной версии.
+
+### Обновление Contact: отправка в Telegram
+
+Теперь Contact — серверная интеграция, а не только localStorage. Цепочка: `validate` в браузере → `POST /api/contact` → повторная серверная валидация → Telegram `sendMessage` фиксированному владельцу → подтверждение → локальная копия в Profile. При ошибке Telegram success не показывается. Если после доставки недоступен localStorage, интерфейс сообщает об успешной доставке без локальной копии.
+
+Код: `src/contact.js`, `api/contact.js`, `server/contact.js`, `Contact` в `Account.jsx`. Токен не находится в клиентской сборке; `.env.local` исключён из Git. Владелец один раз отправляет `/start`, затем его chat ID закрепляется в серверной переменной. Входящие поля формы не могут сменить получателя.
+
+Реальная доставка зависит от конфигурации **Production** на Vercel. Наличие локального токена и успешных тестов с подставным API не означает, что live-бот уже подключён. Веб-форма получает доступ только к `/api/contact`, а не к токену. По требованиям авторизация остаётся локальной симуляцией; серверная отправка Contact — дополнительная функция.
+
+### Что именно требуют PDF
+
+Источники: `Final Project Requirements.pdf`, страницы 1–2; `Final Project Presentation Guideline UPDATED!!!.pdf`, страницы 1–3, из `/home/morninginheaven/Downloads/`.
+
+- Не менее шести связанных работающих страниц; у нас девять основных маршрутов и шесть страниц автомобилей, плюс 404.
+- Основная презентация: введение → демонстрация готового сайта → вывод и будущее улучшение. Отдельный PPTX или набор слайдов в этих двух PDF не указан как обязательный.
+- Максимум пять минут; рекомендуемая цель 4:30–5:00; за каждые лишние 30 секунд −2 балла. Меньше четырёх минут не рекомендуется, но конкретный штраф за это не указан.
+- Участвуют оба. Один может говорить, другой показывать, но каждому нужно знать собственную работу и связи между частями.
+- Показать desktop/tablet/mobile, обе темы, JS-функции, анимацию и API. Не редактировать код во время основной презентации.
+- Подготовить резервные скриншоты или короткую запись экрана на случай проблем с сетью.
+- Каждый студент отдельно загружает в Moodle FINAL EXAM три файла: ZIP проекта, PDF-отчёт с пятью разделами и TXT с repository/live URL.
+- Неправильные форматы, отсутствие одного из трёх файлов и отсутствие индивидуальной подачи перечислены как основания для штрафа −30. Документ не объясняет, складываются ли такие штрафы: не придумывайте итоговую формулу.
+- Срок в задании: **18.11.2026 23:59**.
+
+### Сначала проверьте соответствие версии
+
+Последний коммит с картинками и логотипом — `d8dc00d`. На момент разбора файлы в соседней папке `final-project-submission/` датированы **16.11**, тогда как изображения и бренд изменены **18.11**. Эти файлы нужно обновить/сверить до сдачи. Этот разбор не пересобирает ZIP/PDF/TXT и не публикует сайт.
+
+Текущие тесты и сборка проходили после изменения изображений; запуск Chromium в рабочем окружении заблокирован. Старые скриншоты и старые результаты браузерных проверок не подтверждают последнюю версию. Перед защитой вручную откройте https://final-web1-g3gm.vercel.app/ и проверьте новый логотип, все шесть изображений, формы и API. Совпадение локальной ветки с сохранённым `origin/main` само по себе не доказывает успешный production-деплой.
+
+### Распределение 100 баллов
+
+| Пункт | Баллы | Что обязательно показать/объяснить |
+| --- | ---: | --- |
+| Адаптивность | 10 | Desktop, tablet и mobile; сетки и меню |
+| Хостинг | 5 | Рабочая live-ссылка и отдельная ссылка на репозиторий |
+| Темы | 5 | Смена палитры и сохранение после перехода/Refresh |
+| Дизайн и UX | 20 | Цель, аудитория, единый стиль, понятный путь посетителя |
+| JavaScript | 25 | Регистрация/вход/профиль, своя валидация, поиск/фильтры |
+| Анимации | 5 | Hover/появление карточек; ролик без навязчивого повторения |
+| API | 10 | Реальные данные, loading/error/retry |
+| Связность темы | 10 | Collection → Culture → машина → Garage; погода для тематических мест |
+| Выступление | 5 | Оба участника, ясность и 4:30–5:00 |
+| Качество кода | 5 | Компоненты, отделённые данные/helpers, понятные имена |
+
+Самые весомые блоки: JavaScript 25 + дизайн 20 = 45 баллов. Нельзя тратить большую часть защиты только на картинки.
+
+### Что должен объяснить Dastan без подсказки
+
+1. **Culture** (`src/pages/Editorial.jsx`, `Culture`): `stories.map` создаёт статьи; `key={story.id}` задаёт устойчивый идентификатор; `cars.find` находит машину по `story.car`; ссылка `#/cars/...` связывает статью с каталогом.
+2. **About** (там же, `About`): отдельные смысловые секции, массив команды выводится через `map`; бренд переиспользует `Brand`.
+3. **Profile** (`src/pages/Account.jsx`, `Profile`): `useApp()` даёт `user`, `saved`, `logout`; `cars.filter(car => saved.includes(car.id))` превращает сохранённые ID в полные объекты; затем `map` создаёт карточки.
+4. **Гостевой режим**: без пользователя показывается guest-экран; данные гаража лежат под ключом `guest`. При входе используется `user.id`, поэтому гаражи разделены.
+5. **Сообщения**: Profile читает локальные messages и выбирает записи с `owner === user.id`. Для новых записей показывается статус Telegram-доставки; старые локальные черновики помечены как неотправленные. Копия истории хранится в браузере.
+
+Реплика для связи частей: “My pages use shared data and Context. Profile does not create a separate account system; it displays the user and saved cars maintained by the application.”
+
+### Что должен объяснить Beibarys без подсказки
+
+1. **Запуск и маршруты**: `index.html` → `main.jsx` → `App`; hash меняется, обработчик обновляет state, `App` выбирает компонент. Без React Router.
+2. **Тема**: `useTheme` + `data-theme` + CSS variables + `jdm:theme`; ранний скрипт в HTML применяет сохранённую палитру до React.
+3. **Формы**: controlled inputs → `validate(values, kind)` → объект ошибок → сообщения возле полей; `noValidate` отключает встроенную проверку, `preventDefault` отменяет обычную отправку формы.
+4. **Аккаунт**: нормализованный email, поиск дубликата, случайная соль, SHA-256 хеш, локальный аккаунт и session с ID. Это симуляция без серверной защиты.
+5. **Поиск**: `filter` с поисковой строкой, приводом и производителем, затем сортировка и `map`. `rotary + AWD` даёт пустой результат, потому что RX-7 — RWD.
+6. **API**: эффект с `[city.id, attempt]`, loading, `fetch`, `response.ok`, `response.json`, проверка структуры, success/error, timeout 12 секунд, abort и cleanup.
+7. **Медиа**: исходный GIF перекодирован в MP4; нет `loop`; после `onEnded` остаётся последний WebP-кадр. Машины — отдельные AI-generated WebP, а не SVG или внешний фотохостинг.
+
+### Пять цепочек, которые должны знать оба
+
+- Ввод → `onChange` → `setValues` → новый render; submit → `validate` → ошибки либо действие.
+- Heart → `toggleSaved(id)` → `setGarages` → state + localStorage → Profile.
+- Sign Up → валидация → `registerAccount` → hash → account → session → `#/profile`.
+- Поиск → новое значение filters → `cars.filter` → `sort` → `CarCard` через `map`.
+- Город → `useEffect` → loading → `fetch` → HTTP/JSON validation → success/error → retry.
+
+### Самые вероятные вопросы и готовые короткие ответы
+
+| Вопрос | Ответ по нашему коду |
+| --- | --- |
+| Чем props отличаются от state? | Props приходят от родителя, например `car` в `CarCard`; state принадлежит компоненту и изменяется через setter, например `values` формы. |
+| Зачем Context? | Чтобы Header, CarCard и Profile получали общий user/saved/actions без передачи через каждый промежуточный компонент. |
+| Почему нужны и state, и localStorage? | State обновляет интерфейс; localStorage сохраняет данные после перезагрузки. Сам по себе `setItem` не вызывает React render. |
+| Что делает useEffect? | Синхронизирует компонент с внешним действием: API, DOM-темой, обработчиком события; cleanup освобождает ресурсы. |
+| Что делают map/filter/find/includes? | map преобразует массив, filter оставляет подходящие элементы, find возвращает первый элемент, includes проверяет наличие. |
+| Почему нужен key? | Помогает React сопоставлять элементы списка при изменениях; используем стабильный ID. Это не проп `id` DOM-элемента. |
+| Зачем `...previous`? | Создаёт новый объект и сохраняет остальные записи, например гаражи других пользователей. |
+| Что делает `[owner]` в объекте? | Имя свойства берётся из значения переменной: `guest` либо ID пользователя. |
+| Почему сортировка через `[...results].sort`? | sort меняет массив на месте; копия не затрагивает прежний массив. |
+| Где хранится пароль? | В аккаунте хранится `passwordHash` и соль; введённый пароль есть в памяти формы, но открытый пароль в localStorage не записывается. |
+| Это безопасная настоящая авторизация? | Нет: пользователь может изменить браузерное хранилище. Это требуемая симуляция; реальная проверка нужна на сервере. |
+| Почему не `required` и `type="email"`? | Задание требует собственную JS-валидацию. У форм есть `noValidate`; сообщения выводит наш компонент Field. |
+| Какой пароль проходит? | Минимум 8 символов, строчная и заглавная буквы, цифра и спецсимвол; подтверждение совпадает. |
+| Какой телефон проходит? | Разрешённые символы и 10–15 цифр после удаления пробелов, скобок, плюса и дефисов; это не проверка существования номера. |
+| Что значит async/await? | Ожидание Promise без блокировки интерфейса; ошибки асинхронного кода ловим в try/catch. |
+| Почему проверяем response.ok? | fetch не отклоняет Promise только из-за HTTP 404/500; такой статус проверяем явно. |
+| Зачем AbortController и disposed? | Abort отменяет устаревший запрос, disposed не даёт результату старого эффекта обновить экран. |
+| Что запускает Try again? | Увеличивает attempt; зависимость эффекта изменилась, запрос выполняется заново. |
+| Как погода связана с автомобилями? | Это условия для посещения японских автомобильных локаций; не API характеристик машин и не гарантия состояния дороги. |
+| Почему нет отдельных about.html и contact.html? | Это SPA: один HTML-вход и отдельные связанные React-экраны. Hash определяет страницу и работает на статическом хостинге. |
+| Кто создал изображения? | Они сгенерированы ИИ в одинаковом студийном стиле и оптимизированы в локальные WebP; это указано на страницах машин. |
+| Почему переименовали бренд? | Логотип отсылает к Initial D, тема архива японских автомобилей сохранена. Это не сайт настоящего магазина тофу. |
+| Сообщение Contact отправляется на email? | На email — нет. Contact отправляет данные в Telegram через серверную функцию Vercel, а после подтверждения сохраняет локальную копию. |
+
+### План подготовки на час
+
+| Время | Работа |
+| --- | --- |
+| 0–10 минут | Прочитать этот раздел и каждый своими словами объясняет пять цепочек |
+| 10–25 минут | Dastan разбирает три свои страницы; Beibarys — Auth, filters, API и тему; затем объясняют друг другу |
+| 25–35 минут | Выполнить регистрацию/вход, поиск, профиль, три viewport и API; подготовить фиктивные данные |
+| 35–45 минут | Пройти полный сценарий раздела 15 с таймером; убрать паузы и лишние переходы |
+| 45–55 минут | Задать друг другу вопросы из таблицы и найти соответствующий код |
+| 55–60 минут | Ещё одна репетиция, live-сайт, резервная запись, соответствие ZIP/PDF/TXT |
+
+Проверка готовности: каждый за 30–40 секунд объясняет одну цепочку, указывает нужный файл и предсказывает, что изменится на экране. Если можете только прочитать JSX вслух, нужно ещё потренироваться.
+
 ## 1. Кто что защищает
 
 | Участник | Подтверждённая работа        | Что особенно хорошо знать                                                                                                                                         |
 | -------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Dastan   | About Us, Culture, Profile   | JSX страниц; вывод массивов через map; связь статьи с автомобилем; получение user и saved из Context; вывод профиля; guest-состояние и сохранённые машины         |
-| Beibarys | Остальные страницы и функции | Home, Collection, детали автомобилей, Drive Forecast, Contact, Sign Up/Log In; маршруты, общая стилизация, адаптивность, темы, валидация, localStorage, API и GIF |
+| Beibarys | Остальные страницы и функции | Home, Collection, детали автомобилей, Drive Forecast, Contact, Sign Up/Log In; маршруты, общая стилизация, адаптивность, темы, валидация, localStorage, API и главный MP4-ролик |
 
 Каждый должен уметь объяснить общий путь данных. Dastan недостаточно сказать «профиль показывает имя»: нужно показать, откуда приходит `user`. Beibarys должен уметь объяснить связь авторизации с профилем Dastan.
 
@@ -19,7 +137,7 @@
 
 **Не путайте фактическое поведение:**
 
-- Аккаунты и сообщения работают локально, без сервера.
+- Аккаунты работают локально. Contact использует Vercel Function для отправки в Telegram; в браузере остаётся копия истории.
 - Пароль хранится как хеш с солью, а не открытым текстом.
 - Гостевой и личный гаражи разделены.
 - Поиск работает по локальному массиву; погода приходит из внешнего API.
@@ -422,9 +540,10 @@ export function useTheme() {
 - чёрный и графитовый фон по умолчанию;
 - лаймовый акцент на главном действии;
 - крупный короткий заголовок главной;
-- GIF на весь главный контейнер;
+- однократный MP4-ролик Initial D на главном экране;
 - одинаковые поля, кнопки и карточки;
-- тематические SVG-иллюстрации;
+- шесть локальных WebP-изображений машин в едином студийном стиле;
+- логотип 藤原とうふ店（自家用）, общий компонент Brand и цвета для обеих тем;
 - понятная навигация без часов, звуков и лишних панелей.
 
 Задача дизайна — направить посетителя в коллекцию, затем к машине и её сохранению.
@@ -1326,7 +1445,7 @@ useEffect(() => {
 | Profile/garage       | Личная коллекция любимых машин                                        |
 | Drive Forecast       | Планирование посещения тематических локаций в Японии                  |
 | Contact              | Предложение машины, история или обратная связь                        |
-| Initial D GIF        | Узнаваемое тематическое вступление, которое затем перестаёт отвлекать |
+| Initial D MP4        | Узнаваемое тематическое вступление, которое затем перестаёт отвлекать |
 
 ### Что должен объяснить Dastan про Culture
 
@@ -1420,6 +1539,8 @@ final-project/
 │   ├── styles.css
 │   ├── hero.css
 │   ├── components/
+│   │   ├── Brand.jsx
+│   │   ├── HeroMedia.jsx
 │   │   ├── CarCard.jsx
 │   │   ├── CarArt.jsx
 │   │   ├── Field.jsx
@@ -1431,7 +1552,8 @@ final-project/
 │       ├── Account.jsx
 │       └── Drive.jsx
 ├── public/
-│   ├── images/
+│   ├── branding/
+│   ├── media/studio/
 │   └── fonts/
 ├── tests/
 ├── docs/
@@ -1458,13 +1580,13 @@ npm run report
 
 Путь к Chrome в третьей команде относится к текущей Linux-машине. Если установлен браузер Playwright, достаточно `npm run test:browser`.
 
-`npm test` проверяет 16 именованных тестов в четырёх файлах: validation, account, theme, render. Проверяются неправильные значения, локальные аккаунты, хеши, storage errors, начальная тема и серверный рендеринг маршрутов.
+`npm test` запускает пять тестовых файлов: validation, account, theme, render, contact. Contact-тесты проверяют валидацию на сервере, фиксированного получателя, ошибки и подтверждения Bot API без реальных отправок. Проверяются неправильные значения, локальные аккаунты, хеши, storage errors, начальная тема и серверный рендеринг маршрутов.
 
 `npm run build` подтверждает сборку production-файлов. Сам по себе он не подтверждает корректный вид на телефоне.
 
 Браузерные проверки проверяют реальные клики, формы, темы и размеры экрана. Отчёт использует настоящие PNG-снимки; для них записываются контрольные суммы и fingerprint сборки.
 
-На момент подготовки этого материала прошли **16 тестов логики/рендеринга** и **110 браузерных проверок**. Для отчёта снято **26 реальных состояний страниц**, включая мобильные варианты и формы; отдельно успешно проверен живой запрос к Open-Meteo. Эти результаты относятся к проверенной локальной сборке и не заменяют проверку опубликованного сайта перед выступлением.
+Для текущего обновления с новым логотипом и студийными изображениями прошли `npm test` и `npm run build`; подтверждено наличие всех шести изображений и двух файлов бренда в `dist`. Браузерный запуск в рабочем окружении блокируется ошибкой `Operation not permitted`. Упомянутые в старых материалах 110 браузерных проверок и 26 снимков относятся к предыдущей версии. Они не подтверждают визуальную корректность текущей сборки или актуальность live-сайта.
 
 **Реплика:** “We separate page components, reusable UI, data and business logic. The shared validation and account helpers are testable, and Vite produces a reproducible static build.”
 
@@ -1493,7 +1615,7 @@ npm run report
 | Что такое JSON?                                               | Текстовый формат данных. Он нужен для хранения объектов строками и чтения API-ответа.                                             |
 | Что такое optional chaining ?. ?                              | Безопасный доступ, который возвращает undefined, если промежуточное значение null/undefined.                                      |
 | Чем оператор ?? отличается от логического ИЛИ?                | ?? использует запасное значение только для null/undefined; логическое ИЛИ — для любого falsy-значения, включая 0 и пустую строку. |
-| Есть ли backend?                                              | Нет. Аккаунты и Contact — локальные симуляции; погода запрашивается у внешнего сервиса.                                           |
+| Есть ли backend?                                              | Для Contact есть Vercel Function `/api/contact`; аккаунты остаются локальной симуляцией, погода приходит из Open-Meteo.                                           |
 | Есть ли JWT?                                                  | Нет. В jdm:session хранится ID локального аккаунта.                                                                               |
 | Защищён ли Profile от редактирования localStorage?            | Нет. Это учебная симуляция; реальную защиту проверяет сервер.                                                                     |
 | Можно ли через DevTools увидеть пароль?                       | Открытого пароля в аккаунте нет. Есть соль и хеш, но локальная модель всё равно не является защищённой авторизацией.              |
@@ -1507,63 +1629,90 @@ npm run report
 
 **Погода:** выбор города → эффект → loading → fetch → проверка HTTP и JSON → success/error → вывод интерфейса.
 
-## 15. Полный сценарий демонстрации на 4 минуты 45 секунд
+## 15. Репетиция на двоих: целевое время 4:45
 
-### Порядок и роли
+Текст ниже — английские реплики для выступления. Действия выполняйте одновременно с объяснением. В PDF язык защиты не предписан; английский выбран потому, что интерфейс и учебные требования на английском. Проверьте темп таймером: таблица — план, а не измеренная длительность вашего выступления.
 
-| Время     | Кто      | Что показать                                                   |
-| --------- | -------- | -------------------------------------------------------------- |
-| 0:00–0:30 | Dastan   | Представить команду, группу, тему и аудиторию                  |
-| 0:30–1:00 | Dastan   | About Us и Culture, затем вернуться на Home                    |
-| 1:00–1:35 | Beibarys | Главная, GIF, кратко дизайн и смена темы с сохранением         |
-| 1:35–2:15 | Beibarys | Collection: rotary, AWD, Reset, детали машины                  |
-| 2:15–3:10 | Beibarys | Ошибки регистрации, правильная регистрация, выход и вход       |
-| 3:10–3:40 | Dastan   | Сохранить машину после входа, Profile, Refresh, коротко mobile |
-| 3:40–4:15 | Beibarys | Погода, смена города, loading/error/retry при необходимости    |
-| 4:15–4:30 | Beibarys | Contact и локальное подтверждение                              |
-| 4:30–4:45 | Оба      | Преимущества, дальнейшее развитие и благодарность              |
+| Время | Участник | Действие |
+| --- | --- | --- |
+| 0:00–0:25 | Dastan | Главная: команда, группа, название, аудитория и цель |
+| 0:25–0:55 | Dastan | About → Culture → связанная машина |
+| 0:55–1:20 | Beibarys | Home: стиль, ролик, тема; переход и Refresh |
+| 1:20–1:50 | Beibarys | Collection: rotary → AWD → Reset → детали |
+| 1:50–3:00 | Beibarys | Sign Up: ошибка → исправление → регистрация → выход → вход |
+| 3:00–3:30 | Dastan | После входа: сохранить R34 → Profile → Refresh |
+| 3:30–3:55 | Dastan | Desktop → tablet 768 px → mobile 390 px, мобильное меню |
+| 3:55–4:20 | Beibarys | Вернуть desktop, Drive: Tokyo → Yokohama; loading и результат либо обработанная ошибка |
+| 4:20–4:30 | Beibarys | Contact: после входа имя/email/телефон подставлены; выбрать тему, короткое сообщение, сохранить |
+| 4:30–4:45 | Оба | Итог, следующее улучшение, благодарность |
 
-### Dastan Введение
+### 0:00–0:25 — Dastan: введение
 
-> “Hello, we are Dastan and Beibarys from group SE-2516, team letsgo. Our project is JDM Legends, a React website about Japanese performance cars. It is designed for enthusiasts and curious newcomers. Our goal is to connect the cars, their engineering and the culture around them in one focused collection.”
+> Hello, we are Dastan and Beibarys from group SE-2516, team letsgo. Our project is Fujiwara Tofu Shop, a React website about Japanese performance cars. It helps enthusiasts and newcomers discover six iconic models, explore their stories and build a personal garage.
 
-### Dastan About Us и Culture
+### 0:25–0:55 — Dastan: свои страницы
 
-> “I implemented the About Us, Culture and Profile pages. About Us explains our purpose and introduces the team. Culture adds context through engineering, driving and motorsport stories. Each story can lead to a relevant car, so the content stays connected to the collection.”
+> I worked on About, Culture and Profile. About introduces our team and purpose. Culture explains engineering and motorsport through three stories. Each story links to a relevant car, so visitors can move naturally from reading about the culture to exploring the collection.
 
-### Beibarys Главная и тема
+Нажать About, Culture и Meet the machine у одной статьи. Не читать статью целиком.
 
-> “I implemented the remaining pages and shared functionality. The homepage uses a full-width Initial D animation with a short heading and one main action. The optimized MP4 plays once and stays on the last frame. The theme toggle changes the complete palette and remembers the choice across pages and reloads.”
+### 0:55–1:20 — Beibarys: главная и тема
 
-### Beibarys Каталог
+> I worked on the remaining pages and shared functionality. We use consistent typography, a lime accent and matching studio-style images. The Initial D video plays once. The theme switch changes the full palette and keeps the choice across pages and reloads.
 
-> “The collection has six cars. Searching for rotary immediately shows the RX-7. If I combine it with AWD, there are no matches, so the page provides a clear empty state and reset action. Each car also has a detail page with a story, specifications and a save action.”
+Переключить тему, перейти в Collection и обновить. Указать сохранённую тему. Не ждать повторного видео.
 
-### Beibarys Формы и авторизация
+### 1:20–1:50 — Beibarys: поиск и фильтры
 
-> “Forms use our own JavaScript validation. Invalid email, phone numbers or weak passwords receive messages next to the fields. After valid registration, the application stores a local profile and a salted password hash. We can sign out, sign back in and return to the profile. This is the required local simulation.”
+> Search updates immediately. Rotary finds the RX-7. Combining it with AWD produces an empty state, with a reset action. Filters work together, and their settings are saved. Each car also has a page with its story, specifications and a save button.
 
-### Dastan Профиль
+Ввести `rotary`: одна RX-7. Нажать AWD: нет совпадений. Reset filters: шесть машин. Открыть одну страницу.
 
-> “After signing in, I can save a car to my personal garage. Profile displays the stored name, email, phone number and saved cars. Reloading keeps the collection because it is stored in localStorage. Guest favourites are kept separately. The layout also adapts to a narrow mobile viewport.”
+### 1:50–3:00 — Beibarys: формы, регистрация и вход
 
-### Beibarys API
+> Forms use JavaScript validation with messages beside the fields. Here, an invalid phone number and weak password are rejected. After correction, registration creates a local account. We store a salted password hash. Signing out and back in restores the profile. This is a browser-based authentication simulation.
 
-> “Drive Forecast requests real weather from Open-Meteo for Japanese automotive destinations. Selecting a city starts a new request. We handle loading, errors and retry, cancel outdated requests and use a timeout. The interface also shows the data source and forecast time.”
+Данные для репетиции: имя `Demo Driver`, email `demo.defense.01@example.com`, телефон `123` → `+7 700 123 45 67`, пароль `123` → `Skyline#34`, подтверждение такое же. Каждый повтор регистрации требует нового email либо используйте ранее созданный аккаунт для входа. Не используйте личный пароль.
 
-### Beibarys Contact
+Делайте ошибку предсказуемой: сначала заполнить поля, отправить с плохим телефоном/паролем, затем исправить. После регистрации Sign out → Sign in с тем же email и паролем. Этот блок нужно отрепетировать особенно внимательно: в нём больше всего ввода.
 
-> “The contact form validates the message and saves it locally. The confirmation clearly explains that no email was sent.”
+### 3:00–3:30 — Dastan: профиль и избранное
 
-### Заключение
+> Profile receives the current user and saved car IDs through Context. Saving a car updates shared state and localStorage. Here are the stored profile details and the selected car. Reloading preserves them. Guest favourites and each account’s garage are kept separately.
 
-> “Our strengths are a focused collection, consistent themes, useful local features and a relevant public API. In the future, we would add a backend and cross-device garages. Thank you for your attention.”
+Сохранить машину именно после входа. Затем Profile → Refresh. Гостевая машина автоматически в аккаунт не переносится.
 
-### Что убрать, если время заканчивается
+### 3:30–3:55 — Dastan: адаптивность
 
-Сократите подробный рассказ о дизайне и не объясняйте все поля автомобиля. Оставьте хотя бы одну демонстрацию каждого ключевого пункта: mobile, theme, validation, authentication, search и API.
+> The layout uses Grid, Flexbox and media queries. On a tablet the collection uses fewer columns. On a phone the cards stack and navigation becomes a menu. The same actions remain available at each size.
 
-Не тратьте 30 секунд на ожидание второго проигрывания GIF: он специально не зациклен. Не показывайте все шесть автомобилей по очереди.
+Показать Collection на desktop, 768 px и 390 px. На телефоне открыть меню. Вернуть desktop перед API. Не уменьшать только масштаб страницы: меняйте viewport в Device Toolbar.
+
+### 3:55–4:20 — Beibarys: API
+
+> Drive Forecast loads weather from Open-Meteo for Japanese automotive destinations. Choosing another city starts a new request. We show loading, handle failures, provide retry and cancel outdated requests. The forecast includes current conditions and three days of data.
+
+Если сеть работает, показать два города. Если запрос не прошёл, объяснить экран ошибки и один раз Try again. Искусственное отключение сети и повторные ожидания оставьте для вопросов преподавателя.
+
+### 4:20–4:30 — Beibarys: Contact
+
+> Contact sends validated messages through a Vercel Function to our Telegram bot. The bot token stays on the server. We show success only after Telegram confirms delivery, then keep a local history copy.
+
+После входа личные поля уже заполнены. Выбрать `Project feedback`, ввести `Great collection!`, нажать Send message. Перед защитой нужна проверенная конфигурация бота на Vercel; без неё форма показывает ошибку, а не фиктивный успех. Если осталась пара секунд, показать форму и объяснить поведение без отправки.
+
+### 4:30–4:45 — итог
+
+Dastan:
+
+> Our strengths are a focused theme, connected content and a personal collection.
+
+Beibarys:
+
+> Next, we would add server-side authentication and cross-device accounts. Thank you for your attention.
+
+### Резерв по времени
+
+Если к 3:00 ещё не вошли в аккаунт, закончите вход, сократите рассказ о Profile до одной фразы и двигайтесь дальше. Если к 4:20 API ещё ждёт, покажите loading/error, не запускайте длинную повторную демонстрацию. Сначала сокращайте подробности и Contact; сохраняйте демонстрации mobile/tablet, темы, валидации, авторизации, поиска и API.
 
 ## 16. Как готовиться перед защитой
 
@@ -1596,7 +1745,7 @@ npm run report
 4. Поиск и совместная работа фильтров.
 5. `useTheme` и согласованная палитра.
 6. `fetch`, зависимости эффекта, AbortController и timeout.
-7. Адаптивные сетки, hero и однократный GIF.
+7. Адаптивные сетки, hero и однократный MP4.
 8. Сборка и публикация.
 
 ### Если осталось только 20 минут
@@ -1687,7 +1836,7 @@ location.reload();
 | Ролик сразу статичный                                    | Возможны reduced motion, запрет autoplay или ошибка видео: остаётся WebP последнего кадра.                                         |
 | Аккаунты не работают после открытия HTML двойным щелчком | Запустите через npm run dev и откройте localhost. Для Web Crypto нужен подходящий secure context, например localhost или HTTPS.    |
 | Поиск уже отфильтрован                                   | Настройки сохраняются. Нажмите Reset filters.                                                                                      |
-| Контактное сообщение не пришло на почту                  | Писем нет: это явная локальная симуляция.                                                                                          |
+| Контактное сообщение не пришло на почту                  | Оно отправляется в Telegram. Проверить `/start`, серверные TELEGRAM_BOT_TOKEN/TELEGRAM_CHAT_ID и успешный ответ API.                                                                                          |
 | Браузерный тест не находит Chromium                      | Укажите установленный браузер через CHROMIUM_PATH или установите Chromium через Playwright.                                        |
 | После обновления опубликованного маршрута 404            | Проверьте корректный hash-адрес, публикацию dist и базовый путь.                                                                   |
 | В PDF показаны тестовые погодные значения                | Убедитесь, что подпись указывает controlled response. Для живого API отдельно показывайте текущий запрос к сервису.                |

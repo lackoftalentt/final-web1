@@ -1,3 +1,5 @@
+import { CONTACT_LIMITS, CONTACT_SUBJECTS } from "./contact.js";
+
 export function validate(values, kind) {
   const errors = {};
   if (kind !== "login") {
@@ -33,6 +35,18 @@ export function validate(values, kind) {
     if (!values.message?.trim()) errors.message = "Please write a message.";
     else if (values.message.trim().length < 10)
       errors.message = "Add a little detail — at least 10 characters.";
+    if (
+      values.subject?.trim() &&
+      !CONTACT_SUBJECTS.includes(values.subject.trim())
+    )
+      errors.subject = "Please choose one of the listed topics.";
+    for (const [field, limit] of Object.entries(CONTACT_LIMITS)) {
+      if (
+        typeof values[field] === "string" &&
+        values[field].trim().length > limit
+      )
+        errors[field] = `Use ${limit} characters or fewer.`;
+    }
   }
   return errors;
 }

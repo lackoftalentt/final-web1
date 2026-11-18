@@ -330,7 +330,19 @@ function check(name, value = true) {
   );
 
   await go("/contact");
-  await page.getByRole("button", { name: "Save message" }).click();
+  let contactFails = true;
+  await page.route("**/api/contact", (route) =>
+    route.fulfill({
+      status: contactFails ? 502 : 200,
+      json: contactFails
+        ? {
+            ok: false,
+            error: "The message couldn’t be delivered. Please try again later.",
+          }
+        : { ok: true, deliveredAt: "2026-11-18T12:00:00Z" },
+    }),
+  );
+  await page.getByRole("button", { name: "Send message" }).click();
   check(
     "contact form validates missing topic and message",
     (await page.locator(".field-error").count()) === 2,
@@ -339,10 +351,23 @@ function check(name, value = true) {
   await page
     .getByLabel("Your message", { exact: true })
     .fill("The RX-7 is my favourite rotary car.");
-  await page.getByRole("button", { name: "Save message" }).click();
+  await page.getByRole("button", { name: "Send message" }).click();
+  await page.getByRole("alert").waitFor();
+  check(
+    "failed contact delivery does not show a success screen",
+    (await page.locator(".contact-success").count()) === 0,
+  );
+  check(
+    "failed contact delivery is not recorded as sent",
+    (await page.evaluate(
+      () => JSON.parse(localStorage.getItem("jdm:messages") || "[]").length,
+    )) === 0,
+  );
+  contactFails = false;
+  await page.getByRole("button", { name: "Send message" }).click();
   await page.getByRole("heading", { name: "Thanks, Demo Driver." }).waitFor();
   check(
-    "valid contact message is stored locally",
+    "confirmed contact delivery stores a local history copy (controlled API response)",
     (
       await page.evaluate(() =>
         JSON.parse(localStorage.getItem("jdm:messages")),
@@ -351,7 +376,7 @@ function check(name, value = true) {
   );
   await go("/profile");
   check(
-    "profile shows local messages",
+    "profile shows message delivery history",
     (await page.locator(".profile-messages details").count()) === 1,
   );
 

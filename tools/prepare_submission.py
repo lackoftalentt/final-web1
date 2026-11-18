@@ -202,9 +202,9 @@ def make_report(details, verification, capture):
         ["Explore", "Search and filter the collection", "Find relevant cars and compare reference specifications"],
         ["Personalise", "Register, sign in and save a car", "View user details and stored favourites in Profile"],
         ["Plan", "Select a Japanese destination", "Retrieve current weather and a three-day forecast"],
-        ["Contribute", "Complete Contact", "Save an explicitly local demonstration message"],
+        ["Contribute", "Complete Contact", "Send a message to the project owner via Telegram"],
     ], [29*mm, 58*mm, 83*mm]))
-    heading("Scope and technology", "The implementation uses React functional components, hooks and Context, Vite, semantic HTML, CSS Grid/Flexbox and browser localStorage. There are 15 content routes: nine main pages and six individual car pages, plus a not-found route. This is a client-side coursework application; accounts and contact messages are local simulations without a backend.")
+    heading("Scope and technology", "The implementation uses React functional components, hooks and Context, Vite, semantic HTML, CSS Grid/Flexbox and browser localStorage. There are 15 content routes: nine main pages and six individual car pages, plus a not-found route. This is a client-side coursework application; accounts remain a local simulation, while contact delivery uses a Vercel Function and Telegram Bot API.")
 
     page("3 / Work division", "Who implemented what.")
     story.append(para("The following allocation is the actual work division supplied and confirmed by the team."))
@@ -231,7 +231,7 @@ def make_report(details, verification, capture):
         ["Culture / #/culture", "Editorial sections on Japanese performance engineering, driving culture and rally heritage; links to relevant cars."],
         ["About Us / #/about", "Project purpose, intended audience, design philosophy and team information."],
         ["Drive Forecast / #/drive", "Tokyo, Yokohama and Suzuka selectors; current conditions and three-day weather data."],
-        ["Contact / #/contact", "Name, email, phone, topic and message; inline validation and an honest local-save confirmation."],
+        ["Contact / #/contact", "Name, email, phone, topic and message; inline validation and a Telegram delivery confirmation."],
         ["Sign Up / #/signup", "Name, email, phone, password and confirmation; account creation and redirect to Profile."],
         ["Log In / #/login", "Email and password validation, credential comparison and a useful error on failure."],
         ["Profile / #/profile", "User details, personal saved cars, local contact messages and sign out; guest state links to authentication."],
@@ -248,7 +248,7 @@ def make_report(details, verification, capture):
     page("4.2 / Detailed explanation", "Search, accounts and validation.")
     heading("Dynamic collection", "Text search matches manufacturer, model, generation, engine code and engine type, ignoring letter case and surrounding whitespace. It combines with drivetrain and manufacturer filters. Sorting supports curated order, name, first production year and lightest weight. The result count, empty state and reset action update with React state; the filter choices persist in localStorage.")
     heading("Registration, authentication and profile", "Sign Up stores a trimmed name, normalised email, phone, unique identifier, join date, salt and password hash. Duplicate email accounts are rejected. Log In hashes the supplied password with the saved salt, compares credentials and redirects to Profile. Passwords are not shown on the profile. A saved session identifies the current local account; sign out clears that session.")
-    heading("Saved cars and local messages", "Each car's heart action toggles its membership in the current garage. Guest and account garages are separate, and the interface explains this distinction. A signed-in profile reads its own saved cars and messages. Contact saves a demonstration message on the device and explicitly states that no email was sent.")
+    heading("Saved cars and local messages", "Each car's heart action toggles its membership in the current garage. Guest and account garages are separate, and the interface explains this distinction. A signed-in profile reads its own saved cars and messages. Contact sends validated messages through a Vercel Function to the configured owner's Telegram chat, then saves a local history copy. Success requires Telegram confirmation; old local drafts are marked as not sent.")
     story.append(grid([
         ["Validation rule", "Implementation and feedback"],
         ["Required values", "Whitespace-only names, empty credentials, missing topics and empty messages produce field-level feedback."],
@@ -273,7 +273,7 @@ def make_report(details, verification, capture):
     heading("Consistent themes", "The initial HTML applies the saved theme before React starts, with dark used for missing or invalid preferences. The React theme hook uses the same rule. The page root, body and components read the same colour variables. Preferences persist after navigation/reload and synchronise between tabs through the storage event.")
     heading("Open-Meteo integration", "Drive Forecast sends an asynchronous fetch request to the public forecast endpoint with coordinates for Tokyo, Yokohama or Suzuka. It requests current temperature, weather code and wind speed, plus daily highs/lows, weather codes and maximum precipitation probability for three days. The timezone is Asia/Tokyo. No API key is required.")
     heading("Request lifecycle", "The component shows loading feedback, checks the HTTP status and validates required numeric fields and daily arrays. A new destination cancels an obsolete request with AbortController. A 12-second timeout leads to an on-page error and a working retry action. Weather codes map to readable conditions and icons; source attribution and the CC BY 4.0 link are visible.")
-    heading("Limits of the simulation", "LocalStorage is specific to this browser and origin. Clearing site data removes local accounts and collections. Salted hashing avoids readable password storage but does not create production authentication. Weather needs a network connection; contact messages are never sent to a server. These boundaries are communicated in the relevant interface.")
+    heading("Limits of the simulation", "LocalStorage is specific to this browser and origin. Clearing site data removes local accounts and collections. Salted hashing avoids readable password storage but does not create production authentication. Weather needs a network connection; Contact needs configured server-only Telegram credentials and sends contact details to the owner via Telegram. Local copies remain browser-specific. These boundaries are communicated in the relevant interface.")
 
     page("5 / Screenshots for clarity", "The implemented interface.")
     story.append(para("Screenshots in this section must be real captures of the current production build. The capture tool operates an isolated browser profile, uses sample account details and records each image's route, viewport, theme and SHA-256 digest. Controlled API responses are identified explicitly; they are not presented as live weather."))
@@ -285,7 +285,7 @@ def make_report(details, verification, capture):
         story.append(grid([
             ["Area", "Required visual evidence"],
             ["Pages", "Home, Collection, details, Culture, About Us, Contact, Sign Up, Log In and Profile"],
-            ["JavaScript", "Search result and empty state; invalid forms; signed-in profile; locally saved contact message"],
+            ["JavaScript", "Search result and empty state; invalid forms; signed-in profile; contact confirmation with a controlled API response"],
             ["Themes / responsiveness", "Desktop dark/light, tablet Home, mobile Home, collection and menu"],
             ["API", "Observed live response or honest failure, loading, retry/error and a clearly labelled controlled success response"],
         ], [41*mm, 129*mm]))
@@ -345,7 +345,7 @@ def make_report(details, verification, capture):
     story.append(para("This table maps implementation to the 100-point rubric; it is not a predicted or awarded score.", "ReportSmall"))
 
     page("6.1 / Verification details", "What has actually been checked.")
-    heading("Source checks and production build", "The repository contains 16 named test cases across four files: validation, account services, themes and server rendering. They check invalid input, normalised account lookup, duplicates, salted credentials, storage failure, matching initial theme rules and rendering of all 16 routes including the not-found page. Server rendering does not establish interactive browser behaviour.")
+    heading("Source checks and production build", "The repository contains tests across five files: validation, account services, themes, server rendering and the contact API. Contact tests use a mock Telegram transport and cover invalid input, failed delivery, the fixed recipient and confirmed receipts. They check invalid input, normalised account lookup, duplicates, salted credentials, storage failure, matching initial theme rules and rendering of all 16 routes including the not-found page. Server rendering does not establish interactive browser behaviour.")
     commands = verification.get("commands", [])
     rows = [["Check", "Recorded result"]]
     for command in commands:
@@ -375,7 +375,7 @@ def make_report(details, verification, capture):
         ["2:15-3:10", "Beibarys", "Registration errors, valid account creation, sign-out and login."],
         ["3:10-3:40", "Dastan", "Profile, saved details and garage persistence; narrow-screen layout."],
         ["3:40-4:15", "Beibarys", "Live weather request, loading/error/retry and source attribution."],
-        ["4:15-4:30", "Beibarys", "Contact validation and explicit local-save confirmation."],
+        ["4:15-4:30", "Beibarys", "Contact validation and Telegram delivery confirmation (verify live credentials before presenting)."],
         ["4:30-4:45", "Both", "Strengths, future improvements and thanks."],
     ], [26*mm, 28*mm, 116*mm]))
     heading("Preparation", "Aim for 4:30-5:00 and rehearse without editing code live. Both members participate. Keep the real captured screenshots as an offline backup. Verify the hosted site and public API immediately before the demonstration.")
@@ -424,11 +424,13 @@ def make_report(details, verification, capture):
 
 def package_project():
     zip_path = OUTPUT / f"{PREFIX}_FinalProject.zip"
-    excluded = {"node_modules", ".git", ".generated", "__pycache__"}
+    excluded = {"node_modules", ".git", ".generated", "__pycache__", ".vercel", ".aws", ".codex", ".agents"}
     with ZipFile(zip_path, "w", ZIP_DEFLATED, compresslevel=9) as archive:
         for directory, dirs, files in os.walk(ROOT):
             dirs[:] = sorted(name for name in dirs if name not in excluded)
             for filename in sorted(files):
+                if filename.startswith(".env") and filename != ".env.example":
+                    continue
                 file = Path(directory) / filename
                 if not file.is_symlink() and filename != ".DS_Store":
                     archive.write(file, Path("final-project") / file.relative_to(ROOT))

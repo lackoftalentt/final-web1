@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { navigate, useApp } from "../App.jsx";
 import { cars } from "../data.js";
 import { readStored, writeStored } from "../storage.js";
@@ -9,6 +9,7 @@ import Icon from "../components/Icon.jsx";
 import CarCard from "../components/CarCard.jsx";
 import CarArt from "../components/CarArt.jsx";
 import Brand, { brandName } from "../components/Brand.jsx";
+import { CONTACT_SUBJECTS, sendContact } from "../contact.js";
 
 function focusFirstError(form) {
   requestAnimationFrame(() =>
@@ -228,6 +229,9 @@ export function Contact() {
   });
   const [errors, setErrors] = useState({});
   const [result, setResult] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [deliveryError, setDeliveryError] = useState("");
+  const sending = useRef(false);
   function change(event) {
     setValues((previous) => ({
       ...previous,
@@ -236,28 +240,48 @@ export function Contact() {
     setErrors((previous) => ({ ...previous, [event.target.name]: undefined }));
     setResult("");
   }
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault();
+    if (sending.current) return;
+    const form = event.currentTarget;
     const nextErrors = validate(values, "contact");
     setErrors(nextErrors);
+    setDeliveryError("");
     if (Object.keys(nextErrors).length) {
-      focusFirstError(event.currentTarget);
+      focusFirstError(form);
       return;
     }
-    const stored = readStored("messages", []);
-    const messages = Array.isArray(stored) ? stored : [];
-    const saved = writeStored("messages", [
-      ...messages,
-      {
-        ...values,
-        name: values.name.trim(),
-        email: values.email.trim(),
-        owner: user?.id || "guest",
-        id: crypto.randomUUID(),
-        date: new Date().toISOString(),
-      },
-    ]);
-    setResult(saved ? "success" : "error");
+    sending.current = true;
+    setBusy(true);
+    try {
+      const delivery = await sendContact(values);
+      const stored = readStored("messages", []);
+      const messages = Array.isArray(stored) ? stored : [];
+      const saved = writeStored("messages", [
+        ...messages,
+        {
+          ...values,
+          name: values.name.trim(),
+          email: values.email.trim(),
+          owner: user?.id || "guest",
+          id: crypto.randomUUID(),
+          date: new Date().toISOString(),
+          delivery: "telegram",
+          deliveredAt: delivery.deliveredAt,
+        },
+      ]);
+      setResult(saved ? "success" : "sent-without-history");
+    } catch (error) {
+      setResult("error");
+      setDeliveryError(error.message);
+      if (error.fields) {
+        setErrors(error.fields);
+        focusFirstError(form);
+      }
+    } finally {
+      sending.current = false;
+      setBusy(false);
+    }
   }
   return (
     <section className="container page-section">
@@ -295,22 +319,28 @@ export function Contact() {
             </div>
           </dl>
           <p className="fine-print">
-            This is a demo contact form. Your message is saved on this device;
-            it is not sent to the team.
+            Your message and contact details will be sent to our team via
+            Telegram. A copy is kept in this browser for your message history.
           </p>
         </aside>
         <div className="contact-form-panel">
-          {result === "success" ? (
+          {result === "success" || result === "sent-without-history" ? (
             <div className="contact-success" role="status">
               <span className="success-icon">
                 <Icon name="check" size={30} />
               </span>
-              <span className="eyebrow">Message saved locally</span>
+              <span className="eyebrow">Message sent</span>
               <h2>Thanks, {values.name.trim()}.</h2>
               <p>
-                Your message about “{values.subject}” is saved in this browser.
-                No email has been sent.
+                Your message about “{values.subject}” has been delivered to our
+                team via Telegram.
               </p>
+              {result === "sent-without-history" && (
+                <p className="fine-print">
+                  Delivery succeeded, but a copy couldn’t be saved in this
+                  browser.
+                </p>
+              )}
               <button
                 className="button"
                 onClick={() => {
@@ -326,73 +356,74 @@ export function Contact() {
               </button>
             </div>
           ) : (
-            <form noValidate onSubmit={submit} aria-label="Contact the team">
-              <div className="form-row">
+            <form
+              noValidate
+              onSubmit={submit}
+              aria-label="Contact the team"
+              aria-busy={busy}
+            >
+              <fieldset className="contact-fields" disabled={busy}>
+                <div className="form-row">
+                  <Field
+                    label="Your name"
+                    name="name"
+                    value={values.name}
+                    onChange={change}
+                    error={errors.name}
+                    autoComplete="name"
+                    placeholder="Your name"
+                  />
+                  <Field
+                    label="Email address"
+                    name="email"
+                    value={values.email}
+                    onChange={change}
+                    error={errors.email}
+                    inputMode="email"
+                    autoComplete="email"
+                    placeholder="you@example.com"
+                  />
+                </div>
                 <Field
-                  label="Your name"
-                  name="name"
-                  value={values.name}
+                  label="Phone number"
+                  name="phone"
+                  type="tel"
+                  value={values.phone}
                   onChange={change}
-                  error={errors.name}
-                  autoComplete="name"
-                  placeholder="Your name"
+                  error={errors.phone}
+                  autoComplete="tel"
+                  placeholder="+7 700 123 45 67"
                 />
                 <Field
-                  label="Email address"
-                  name="email"
-                  value={values.email}
+                  label="What’s on your mind?"
+                  name="subject"
+                  value={values.subject}
                   onChange={change}
-                  error={errors.email}
-                  inputMode="email"
-                  autoComplete="email"
-                  placeholder="you@example.com"
+                  error={errors.subject}
+                  options={CONTACT_SUBJECTS}
                 />
-              </div>
-              <Field
-                label="Phone number"
-                name="phone"
-                type="tel"
-                value={values.phone}
-                onChange={change}
-                error={errors.phone}
-                autoComplete="tel"
-                placeholder="+7 700 123 45 67"
-              />
-              <Field
-                label="What’s on your mind?"
-                name="subject"
-                value={values.subject}
-                onChange={change}
-                error={errors.subject}
-                options={[
-                  "Suggest a car",
-                  "Share a story",
-                  "Project feedback",
-                  "Something else",
-                ]}
-              />
-              <Field
-                label="Your message"
-                name="message"
-                value={values.message}
-                onChange={change}
-                error={errors.message}
-                multiline
-                placeholder="Tell us a little more…"
-              />
-              {result === "error" && (
-                <p role="alert" className="form-feedback error-feedback">
-                  The message couldn’t be saved. Check that local storage is
-                  enabled.
+                <Field
+                  label="Your message"
+                  name="message"
+                  value={values.message}
+                  onChange={change}
+                  error={errors.message}
+                  multiline
+                  placeholder="Tell us a little more…"
+                />
+                {result === "error" && (
+                  <p role="alert" className="form-feedback error-feedback">
+                    {deliveryError}
+                  </p>
+                )}
+                <button className="button form-submit" disabled={busy}>
+                  {busy ? "Sending…" : "Send message"} <Icon name="diagonal" />
+                </button>
+                <p className="fine-print">
+                  All fields are needed. Your contact details are shared with
+                  the team when you send this form.
                 </p>
-              )}
-              <button className="button form-submit">
-                Save message <Icon name="diagonal" />
-              </button>
-              <p className="fine-print">
-                All fields are needed. This form saves a local demonstration
-                message.
-              </p>
+              </fieldset>
             </form>
           )}
         </div>
@@ -495,9 +526,9 @@ export function Profile() {
       )}
       {user && messages.length > 0 && (
         <div className="profile-messages">
-          <h2>Your local messages</h2>
+          <h2>Your message history</h2>
           <p className="fine-print">
-            Saved on this device. These messages have not been sent.
+            Copies saved in this browser. Telegram deliveries are marked below.
           </p>
           {messages.map((message) => (
             <details key={message.id}>
@@ -505,6 +536,11 @@ export function Profile() {
                 {message.subject}
                 <span>{new Date(message.date).toLocaleDateString("en")}</span>
               </summary>
+              <p className="fine-print">
+                {message.delivery === "telegram"
+                  ? "Delivered to the team via Telegram."
+                  : "Local draft from the previous version; not sent."}
+              </p>
               <p>{message.message}</p>
             </details>
           ))}
