@@ -14,6 +14,11 @@ export const cars = [
     weight: 1560,
     layout: "AWD",
     color: "#6e9bbb",
+    photo: {
+      src: "https://am-s3-bucket-assets.s3.eu-west-2.amazonaws.com/silverstone/prod/lot_images/large/REC13775-1/REC13775-1_5.jpg.webp?dummy=1772560897",
+      source: "https://www.iconicauctioneers.com/1999-nissan-skyline-r34-gt-r-rec13775-1-nec-1124",
+      credit: "Iconic Auctioneers",
+    },
     tag: "The all-round icon",
     description:
       "Precision, boost, and four wheels working as one. The R34 brought the GT-R formula into a new era, with an RB26 heart and a cockpit built around the driver.",
@@ -35,6 +40,11 @@ export const cars = [
     weight: 1510,
     layout: "RWD",
     color: "#d1b89b",
+    photo: {
+      src: "https://img.benlevy.com/auto/2024/oak-park-cars-coffee-2024-06-16/oak_park_cars_coffee_0774.jpg",
+      source: "https://www.benlevy.com/pics/33810",
+      credit: "Ben Levy",
+    },
     tag: "Built for the long run",
     description:
       "A long bonnet, a muscular stance, and one of the most celebrated engines in tuning. The fourth-generation Supra made the grand tourer an enthusiast obsession.",
@@ -56,6 +66,11 @@ export const cars = [
     weight: 1280,
     layout: "RWD",
     color: "#a93638",
+    photo: {
+      src: "https://dealeraccelerate-all.s3.amazonaws.com/international/images/1/3/7/137/6541f0a95052_hd_1991-mazda-rx-7.jpg",
+      source: "https://www.importavehicle.com/vehicles/122/1992-mazda-rx-7",
+      credit: "Toprank Importers",
+    },
     tag: "Less weight. More feeling.",
     description:
       "Compact rotary power and a beautifully balanced chassis. The FD is a reminder that the best performance cars are measured in feeling as much as figures.",
@@ -77,6 +92,11 @@ export const cars = [
     weight: 1350,
     layout: "RWD",
     color: "#d0553d",
+    photo: {
+      src: "https://cdn.motor1.com/images/mgl/rlBQ1/s1/honda-acura-nsx.jpg",
+      source: "https://tr.motor1.com/news/133621/gecmise-bakis-honda-acura-nsx-na1/",
+      credit: "Motor1",
+    },
     tag: "A different kind of supercar",
     description:
       "An aluminium body, a high-revving V6, and mid-engine balance. The original NSX made exotic engineering approachable and usable.",
@@ -98,6 +118,11 @@ export const cars = [
     weight: 1360,
     layout: "AWD",
     color: "#d4d9d5",
+    photo: {
+      src: "https://am-s3-bucket-assets.s3.eu-west-2.amazonaws.com/silverstone/prod/lot_images/large/REC13037-1/REC13037-1_11.jpg.webp?dummy=1770615655",
+      source: "https://www.iconicauctioneers.com/1999-mitsubishi-lancer-evolution-vi-rec13037-1-nec-1123",
+      credit: "Iconic Auctioneers",
+    },
     tag: "From the rally stage",
     description:
       "Four doors, four driven wheels, and a rally-bred turbo engine. The Evolution VI translates competition thinking into a remarkably focused road car.",
@@ -119,6 +144,11 @@ export const cars = [
     weight: 1270,
     layout: "AWD",
     color: "#416eab",
+    photo: {
+      src: "https://toprankglobal.jp/picture/vehicle/108860_23.jpg",
+      source: "https://toprankglobal.jp/stockdetail/108860/2000%20Subaru%20IMPREZA%20STI",
+      credit: "Toprank Global",
+    },
     tag: "Boxer heartbeat",
     description:
       "A low-slung boxer engine, all-wheel-drive grip, and a silhouette born on the stages. The GC8 brings rally character to every ordinary road.",

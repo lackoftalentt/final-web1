@@ -18,7 +18,6 @@ export default function CarCard({ car, index = 0 }) {
           <Icon name="heart" />
         </button>
         <a href={`#/cars/${car.id}`} tabIndex="-1" aria-hidden="true">
-          <span className="car-backdrop">{car.generation}</span>
           <CarArt car={car} />
         </a>
       </div>

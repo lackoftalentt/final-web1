@@ -532,14 +532,29 @@ main:focus {
 }
 .car-card-visual .car-art {
   position: absolute;
-  inset: auto 0 0;
+  inset: 52px 0 12px;
   width: 100%;
-  height: auto;
+  height: calc(100% - 64px);
+  object-fit: contain;
   transition: transform 0.4s;
-  transform: scale(1.05);
 }
 .car-card:hover .car-art {
-  transform: scale(1.1) translateY(-3px);
+  transform: scale(1.025);
+}
+.car-photo-unavailable {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 20px;
+  text-align: center;
+  color: var(--muted);
+  background: var(--subtle);
+  font-size: 13px;
+}
+.car-photo-unavailable > :last-child {
+  font-size: 11px;
 }
 .car-code {
   position: absolute;
@@ -779,10 +794,11 @@ select option {
 }
 .detail-art .car-art {
   position: absolute;
-  width: 110%;
-  max-width: none;
-  bottom: 5%;
-  left: -5%;
+  width: 100%;
+  height: calc(100% - 120px);
+  object-fit: contain;
+  top: 60px;
+  left: 0;
   z-index: 1;
 }
 .detail-watermark {
@@ -803,6 +819,10 @@ select option {
   left: 26px;
   font-size: 11px;
   color: var(--muted);
+}
+.art-credit:hover {
+  color: var(--text);
+  text-decoration: underline;
 }
 .detail-copy h1 {
   font-size: clamp(2.3rem, 3.8vw, 3.5rem);
@@ -953,10 +973,11 @@ select option {
 }
 .story-visual .car-art {
   position: absolute;
-  width: 110%;
-  max-width: none;
-  left: -5%;
-  bottom: 4%;
+  width: 100%;
+  height: calc(100% - 100px);
+  object-fit: contain;
+  left: 0;
+  top: 28px;
 }
 .story-visual > .eyebrow {
   position: absolute;
@@ -1345,10 +1366,16 @@ select option {
 }
 .auth-car {
   position: absolute;
-  left: -15%;
-  right: -15%;
-  top: 35%;
-  transform: rotate(-7deg);
+  left: 0;
+  right: 0;
+  top: 44%;
+}
+.auth-car .car-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1.5;
+  object-fit: contain;
 }
 .auth-art-caption {
   position: absolute;
@@ -2186,9 +2213,6 @@ select option {
   .car-card-visual {
     aspect-ratio: 1.6;
   }
-  .car-card-visual .car-art {
-    bottom: -6%;
-  }
   .car-backdrop {
     font-size: 80px;
     top: 20%;
@@ -2335,9 +2359,6 @@ select option {
     aspect-ratio: 1.35;
     padding: 22px;
   }
-  .detail-art .car-art {
-    bottom: 1%;
-  }
   .detail-watermark {
     top: 15%;
     font-size: 7rem;
@@ -2418,9 +2439,6 @@ select option {
   }
   .story-visual {
     aspect-ratio: 1.5;
-  }
-  .story-visual .car-art {
-    bottom: 0;
   }
   .story-number {
     font-size: 120px;
