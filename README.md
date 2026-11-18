@@ -70,6 +70,8 @@ localStorage: `jdm:theme`, `jdm:accounts`, `jdm:session`, `jdm:garages`, `jdm:fi
 
 API-тесты используют подставной Bot API, браузерные тесты и сборщик снимков — контролируемый ответ `/api/contact`. Они не отправляют уведомления и не доказывают работу настоящего бота.
 
+**Production-проверка 18.11.2026:** серверные переменные заданы, версия `cc4e9ab` опубликована напрямую через Vercel MCP. Публичный сайт отвечает 200, неверный метод API — 405, неправильные поля — 400. Настоящая отправка через `/api/contact` получила подтверждение Telegram (200, `ok: true`); владельцу отправлено одно тестовое сообщение от Deployment check. Runtime errors за выбранные 15 минут не найдены. Подробности без секретов — в `docs/telegram-production-check.json`. GitHub push из рабочего окружения не прошёл из-за DNS; локальные коммиты ещё нужно отправить в origin/main из обычного терминала.
+
 Официальные источники: [Telegram Bot API](https://core.telegram.org/bots/api#sendmessage), [получение обновлений](https://core.telegram.org/bots/api#getupdates), [Vercel Functions](https://vercel.com/docs/functions/runtimes/node-js), [переменные окружения](https://vercel.com/docs/environment-variables).
 
 ## Проверки

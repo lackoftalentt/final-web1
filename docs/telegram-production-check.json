@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-11-18T13:32:02Z",
+  "status": "passed",
+  "url": "https://final-web1-g3gm.vercel.app/",
+  "environment": "production",
+  "framework": "vite",
+  "deploymentId": "dpl_CPtQVm1t2y3S9eBb7aLoDRPRn3Bn",
+  "deploymentState": "READY",
+  "sourceCommit": "cc4e9ab7835d7fc877fa8007a1c7c0e8b09d14e9",
+  "deploymentMethod": "Authenticated Vercel MCP source upload; local git push could not reach GitHub",
+  "buildDurationMs": 14091,
+  "environmentVariables": {
+    "TELEGRAM_BOT_TOKEN": "production, secret; value omitted",
+    "TELEGRAM_CHAT_ID": "production, encrypted; value omitted"
+  },
+  "checks": [
+    { "name": "public homepage", "httpStatus": 200, "currentClientBundle": "index-DYVtzeXi.js" },
+    { "name": "GET /api/contact rejects unsupported method", "httpStatus": 405 },
+    { "name": "invalid contact fields are rejected", "httpStatus": 400 },
+    {
+      "name": "real POST /api/contact sends one Telegram test message",
+      "httpStatus": 200,
+      "response": { "ok": true, "deliveredAt": "2026-11-18T13:31:19.190Z" },
+      "cacheControl": "no-store",
+      "testSender": "Deployment check",
+      "transport": "Real Telegram Bot API; no mock",
+      "meaning": "Server received a successful Telegram sendMessage receipt; recipient reading the message is not established"
+    }
+  ],
+  "verification": {
+    "method": "HTTP requests from an ephemeral Vercel Sandbox",
+    "browserUi": "Not exercised in this production check",
+    "sandboxStopped": true
+  },
+  "observability": {
+    "apiRuntimeErrorsLast15Minutes": "none found",
+    "deploymentErrorOrFatalLogsLast15Minutes": "none found",
+    "drains": "not inspected",
+    "monitoring": "One-time runtime error and log checks"
+  }
+}
