@@ -156,7 +156,7 @@ export function Garage() {
       )}
       <p className="fine-print spec-note">
         Figures describe selected Japanese-market variants; specifications vary
-        by year and trim. Photos show the model; colour, year and trim may vary.
+        by year and trim. AI-generated studio imagery is illustrative.
       </p>
     </section>
   );
@@ -178,14 +178,7 @@ export function CarDetails({ id }) {
             {car.maker} / {car.code}
           </span>
           <CarArt car={car} />
-          <a
-            className="art-credit"
-            href={car.photo.source}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Photo: {car.photo.credit} ↗
-          </a>
+          <span className="art-credit">AI-generated studio image</span>
         </div>
         <div className="detail-copy">
           <span className="eyebrow">

@@ -15,9 +15,8 @@ export const cars = [
     layout: "AWD",
     color: "#6e9bbb",
     photo: {
-      src: "https://am-s3-bucket-assets.s3.eu-west-2.amazonaws.com/silverstone/prod/lot_images/large/REC13775-1/REC13775-1_5.jpg.webp?dummy=1772560897",
-      source: "https://www.iconicauctioneers.com/1999-nissan-skyline-r34-gt-r-rec13775-1-nec-1124",
-      credit: "Iconic Auctioneers",
+      src: "./media/studio/r34-studio-1114451028c1.webp",
+      credit: "AI-generated studio image",
     },
     tag: "The all-round icon",
     description:
@@ -41,9 +40,8 @@ export const cars = [
     layout: "RWD",
     color: "#d1b89b",
     photo: {
-      src: "https://img.benlevy.com/auto/2024/oak-park-cars-coffee-2024-06-16/oak_park_cars_coffee_0774.jpg",
-      source: "https://www.benlevy.com/pics/33810",
-      credit: "Ben Levy",
+      src: "./media/studio/supra-studio-a86be32245a3.webp",
+      credit: "AI-generated studio image",
     },
     tag: "Built for the long run",
     description:
@@ -67,9 +65,8 @@ export const cars = [
     layout: "RWD",
     color: "#a93638",
     photo: {
-      src: "https://dealeraccelerate-all.s3.amazonaws.com/international/images/1/3/7/137/6541f0a95052_hd_1991-mazda-rx-7.jpg",
-      source: "https://www.importavehicle.com/vehicles/122/1992-mazda-rx-7",
-      credit: "Toprank Importers",
+      src: "./media/studio/rx7-studio-530f286101c7.webp",
+      credit: "AI-generated studio image",
     },
     tag: "Less weight. More feeling.",
     description:
@@ -93,9 +90,8 @@ export const cars = [
     layout: "RWD",
     color: "#d0553d",
     photo: {
-      src: "https://cdn.motor1.com/images/mgl/rlBQ1/s1/honda-acura-nsx.jpg",
-      source: "https://tr.motor1.com/news/133621/gecmise-bakis-honda-acura-nsx-na1/",
-      credit: "Motor1",
+      src: "./media/studio/nsx-studio-e13b2df594c9.webp",
+      credit: "AI-generated studio image",
     },
     tag: "A different kind of supercar",
     description:
@@ -119,9 +115,8 @@ export const cars = [
     layout: "AWD",
     color: "#d4d9d5",
     photo: {
-      src: "https://am-s3-bucket-assets.s3.eu-west-2.amazonaws.com/silverstone/prod/lot_images/large/REC13037-1/REC13037-1_11.jpg.webp?dummy=1770615655",
-      source: "https://www.iconicauctioneers.com/1999-mitsubishi-lancer-evolution-vi-rec13037-1-nec-1123",
-      credit: "Iconic Auctioneers",
+      src: "./media/studio/evo-studio-a35a23ede8f5.webp",
+      credit: "AI-generated studio image",
     },
     tag: "From the rally stage",
     description:
@@ -145,9 +140,8 @@ export const cars = [
     layout: "AWD",
     color: "#416eab",
     photo: {
-      src: "https://toprankglobal.jp/picture/vehicle/108860_23.jpg",
-      source: "https://toprankglobal.jp/stockdetail/108860/2000%20Subaru%20IMPREZA%20STI",
-      credit: "Toprank Global",
+      src: "./media/studio/sti-studio-b20093d00961.webp",
+      credit: "AI-generated studio image",
     },
     tag: "Boxer heartbeat",
     description:

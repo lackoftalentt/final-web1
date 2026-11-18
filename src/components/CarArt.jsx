@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function CarArt({ car }) {
   const [failedSource, setFailedSource] = useState(null);
-  const description = `${car.maker} ${car.name} (${car.generation}), side-profile photograph`;
+  const description = `${car.maker} ${car.name} (${car.generation}), AI-generated studio side profile`;
 
   if (failedSource === car.photo.src) {
     return (
@@ -24,11 +24,10 @@ export default function CarArt({ car }) {
       className="car-art"
       src={car.photo.src}
       alt={description}
-      width="1200"
-      height="800"
+      width="1536"
+      height="1024"
       loading="lazy"
       decoding="async"
-      referrerPolicy="no-referrer"
       onError={() => setFailedSource(car.photo.src)}
     />
   );

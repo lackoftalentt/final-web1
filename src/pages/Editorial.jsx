@@ -1,5 +1,6 @@
 import { cars, stories } from "../data.js";
 import CarArt from "../components/CarArt.jsx";
+import Brand, { brandName } from "../components/Brand.jsx";
 import Icon from "../components/Icon.jsx";
 
 export function Culture() {
@@ -82,9 +83,7 @@ export function About() {
         <p>Six cars. Countless reasons to care about them.</p>
       </div>
       <div className="about-manifesto">
-        <span className="manifesto-mark" aria-hidden="true">
-          JDM<span>LEGENDS</span>
-        </span>
+        <Brand className="manifesto-logo" />
         <div>
           <span className="eyebrow">Our idea</span>
           <h2>
@@ -93,7 +92,7 @@ export function About() {
             More of what matters.
           </h2>
           <p>
-            JDM Legends is an independent collection of the Japanese performance
+            {brandName} is an independent collection of the Japanese performance
             cars we keep coming back to. We bring their stories, defining
             engineering, and culture together in one focused place.
           </p>

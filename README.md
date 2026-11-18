@@ -1,4 +1,4 @@
-# JDM Legends — Final Project
+# Fujiwara Tofu Shop — Final Project
 
 Новая версия проекта с нуля на **React 19 + Vite**, без Bootstrap и jQuery.
 
@@ -39,7 +39,7 @@ npm run preview
 | Избранное                   | Сердце на карточке; гостевой и персональный гаражи хранятся отдельно                                                     |
 | API                         | `fetch` к Open-Meteo: Tokyo, Yokohama, Suzuka; текущие условия и 3 дня; loading/error/retry/timeout/AbortController      |
 | Интерактивность             | Работающие кнопки, вкладки, плавные hover-эффекты, reduced-motion                                                        |
-| Минималистичный дизайн      | Компактная палитра, локальный вариативный шрифт, фотографии машин в профиль; нет часов, звуков и всплывающей подписки  |
+| Минималистичный дизайн      | Компактная палитра, локальный вариативный шрифт, единая серия студийных изображений машин в профиль; нет часов, звуков и всплывающей подписки  |
 | Хостинг                     | Сайт опубликован на Vercel: https://final-web1-g3gm.vercel.app/; оптимизация медиа опубликована и проверена              |
 
 Навигация использует hash-маршруты (`#/cars/r34`), поэтому обновление страницы не требует серверного перенаправления. `base: './'` позволяет размещать сборку в подкаталоге GitHub Pages.
@@ -119,7 +119,7 @@ src/
   data.js             коллекция, статьи, локации
   storage.js          localStorage и хеширование
   validation.js       общая проверка форм
-  components/         иконки, фотографии машин, карточки, поля
+  components/         логотип, иконки, изображения машин, карточки, поля
   pages/              страницы приложения
   styles.css          темы, компоненты, адаптивность
   hero.css            полноширинный ролик и типографика главного экрана
@@ -137,18 +137,10 @@ docs/                 защита и результаты проверки
 
 API: [Open-Meteo docs](https://open-meteo.com/en/docs), погода — [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
-Исторический контекст: [Nissan Heritage — R34 V-spec II](https://www.nissan-global.com/EN/HERITAGE_COLLECTION/280_skyline_gt-r_v-spec_ii.html), [Toyota — A80 lineage](https://www.toyota-global.com/company/history_of_toyota/75years/vehicle_lineage/car/id60006850/index.html), [Mazda — RX-7 history](https://www2.mazda.com/en/stories/craftmanship/greatcar/p15.html), [Mazda — 280 PS RX-7](https://newsroom.mazda.com/en/publicity/release/1998/9812/981215be.html), [Honda — 1990 NSX](https://www.honda.co.jp/factbook/auto/NSX/19900913/ns90-036.html), [Mitsubishi — car history](https://www.mitsubishi-motors.com/en/company/history/car/index.html), [Subaru — 1999 Impreza](https://www.subaru.co.jp/news/archives/99_7_9/09_06.htm/). Числа относятся к выбранным японским версиям, а не ко всем годам и комплектациям. Фотографии коллекции показывают соответствующую модель в профиль; цвет, год и комплектация на фото могут отличаться от выбранной японской версии. GIF из Initial D для главного экрана предоставлен пользователем.
+Исторический контекст: [Nissan Heritage — R34 V-spec II](https://www.nissan-global.com/EN/HERITAGE_COLLECTION/280_skyline_gt-r_v-spec_ii.html), [Toyota — A80 lineage](https://www.toyota-global.com/company/history_of_toyota/75years/vehicle_lineage/car/id60006850/index.html), [Mazda — RX-7 history](https://www2.mazda.com/en/stories/craftmanship/greatcar/p15.html), [Mazda — 280 PS RX-7](https://newsroom.mazda.com/en/publicity/release/1998/9812/981215be.html), [Honda — 1990 NSX](https://www.honda.co.jp/factbook/auto/NSX/19900913/ns90-036.html), [Mitsubishi — car history](https://www.mitsubishi-motors.com/en/company/history/car/index.html), [Subaru — 1999 Impreza](https://www.subaru.co.jp/news/archives/99_7_9/09_06.htm/). Числа относятся к выбранным японским версиям, а не ко всем годам и комплектациям. Изображения машин созданы с помощью ИИ в едином студийном стиле и показывают соответствующую модель в профиль. Это иллюстративные изображения, а не документальные фотографии. GIF из Initial D для главного экрана предоставлен пользователем.
 
+Изображения машин — локальная серия из шести кадров 1536 × 1024: R34, Supra A80, RX-7 FD, NSX NA1, Evolution VI и Impreza GC8. Все машины показаны строго сбоку, носом вправо, на графитовом студийном фоне с одинаковым светом. Кадр R34 использован как визуальный образец для остальных пяти. PNG-оригиналы сохранены в `assets/source/studio/`; оптимизированные WebP загружаются из `public/media/studio/`. Внешние фотохостинги больше не используются. На страницах машин указано, что изображения сгенерированы ИИ.
 
-Фотографии машин заменяют прежние SVG во всех карточках, статьях, форме входа и на страницах моделей. Источник каждой фотографии доступен по ссылке на странице машины; адреса и подписи хранятся в `src/data.js`. Кадры показываются целиком через `object-fit: contain`, изображения загружаются лениво. При ошибке загрузки отображается подпись «Photo unavailable».
+Логотип **藤原とうふ店（自家用）** подготовлен по изображению пользователя: фон и курсор удалены, надпись сохранена на прозрачном фоне. Он используется в шапке, футере, форме входа и блоке «О проекте»; название вкладок и тексты бренда заменены на Fujiwara Tofu Shop. В тёмной теме логотип белый, в светлой — чёрный. Локальные файлы логотипа и иконки находятся в `public/branding/`, исходники — в `assets/source/`. Компонент бренда: `src/components/Brand.jsx`.
 
-| Модель | Источник фотографии |
-| --- | --- |
-| Nissan Skyline GT-R R34 | [Iconic Auctioneers](https://www.iconicauctioneers.com/1999-nissan-skyline-r34-gt-r-rec13775-1-nec-1124) |
-| Toyota Supra A80 | [Ben Levy](https://www.benlevy.com/pics/33810) |
-| Mazda RX-7 FD | [Toprank Importers](https://www.importavehicle.com/vehicles/122/1992-mazda-rx-7) |
-| Honda NSX NA1 | [Motor1](https://tr.motor1.com/news/133621/gecmise-bakis-honda-acura-nsx-na1/) |
-| Mitsubishi Lancer Evolution VI | [Iconic Auctioneers](https://www.iconicauctioneers.com/1999-mitsubishi-lancer-evolution-vi-rec13037-1-nec-1123) |
-| Subaru Impreza WRX STI GC8 | [Toprank Global](https://toprankglobal.jp/stockdetail/108860/2000%20Subaru%20IMPREZA%20STI) |
-
-Обновление фотографий, 18.11.2026: используются внешние HTTPS-адреса, для загрузки нужен доступ к сайтам источников. Все шесть адресов открыты через веб-инструмент; скачать изображения локально не удалось из-за сетевых ограничений рабочего окружения. `npm test` и `npm run build` проходят. Браузерная проверка текущих изменений заблокирована ограничениями окружения при запуске установленного Chromium (`setsockopt: Operation not permitted`), поэтому новые desktop/mobile-скриншоты не получены. Существующие снимки и прежние результаты проверки относятся к предыдущей версии сайта.
+Промпты, происхождение и размеры файлов записаны в `docs/studio-assets.json`. Генерация выполнена встроенным image_gen. Проверка в браузере ограничена окружением: установленный Chromium не запускается (`Operation not permitted`), поэтому существующие снимки относятся к предыдущей версии сайта.

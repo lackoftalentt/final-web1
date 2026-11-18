@@ -326,25 +326,19 @@ main:focus {
 .wordmark {
   display: flex;
   align-items: center;
-  gap: 9px;
-  font-weight: 800;
-  letter-spacing: -0.8px;
-  font-size: 16px;
-  white-space: nowrap;
+  flex-shrink: 0;
 }
-.brand-mark {
-  font-size: 27px;
-  font-style: italic;
-  font-weight: 850;
-  letter-spacing: -2px;
+.brand-logo {
+  display: block;
+  width: 248px;
+  height: auto;
+  filter: invert(1);
 }
-.brand-mark > span {
-  letter-spacing: -3px;
+:root[data-theme="light"] .brand-logo {
+  filter: none;
 }
-.brand-dot {
-  font-size: 11px;
-  vertical-align: super;
-  margin-left: 3px;
+.wordmark .brand-logo {
+  width: 238px;
 }
 .main-nav {
   display: flex;
@@ -519,7 +513,7 @@ main:focus {
 }
 .car-card-visual {
   position: relative;
-  background: var(--subtle);
+  background: #202023;
   border-radius: 6px;
   overflow: hidden;
   aspect-ratio: 1.5;
@@ -532,10 +526,10 @@ main:focus {
 }
 .car-card-visual .car-art {
   position: absolute;
-  inset: 52px 0 12px;
+  inset: 0;
   width: 100%;
-  height: calc(100% - 64px);
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
   transition: transform 0.4s;
 }
 .car-card:hover .car-art {
@@ -564,6 +558,7 @@ main:focus {
   font-weight: 550;
   letter-spacing: 1.4px;
   z-index: 1;
+  color: #f3f3ee;
 }
 .save-button {
   position: absolute;
@@ -786,11 +781,14 @@ select option {
 }
 .detail-art {
   position: relative;
-  background: var(--subtle);
+  background: #202023;
   border-radius: 6px;
   padding: 26px;
   overflow: hidden;
   aspect-ratio: 1.2;
+}
+.detail-art > .eyebrow {
+  color: #c8c8c6;
 }
 .detail-art .car-art {
   position: absolute;
@@ -818,11 +816,7 @@ select option {
   bottom: 20px;
   left: 26px;
   font-size: 11px;
-  color: var(--muted);
-}
-.art-credit:hover {
-  color: var(--text);
-  text-decoration: underline;
+  color: #b9b9b6;
 }
 .detail-copy h1 {
   font-size: clamp(2.3rem, 3.8vw, 3.5rem);
@@ -955,7 +949,7 @@ select option {
 }
 .story-visual {
   position: relative;
-  background: var(--subtle);
+  background: #202023;
   aspect-ratio: 1.3;
   border-radius: 6px;
   overflow: hidden;
@@ -982,6 +976,7 @@ select option {
 .story-visual > .eyebrow {
   position: absolute;
   bottom: 23px;
+  color: #c8c8c6;
 }
 .story-text h2 {
   font-size: 2rem;
@@ -1027,20 +1022,9 @@ select option {
   align-items: center;
   margin-bottom: 65px;
 }
-.manifesto-mark {
-  font-size: clamp(65px, 11vw, 160px);
-  font-style: italic;
-  font-weight: 850;
-  line-height: 1.1;
-  letter-spacing: -10px;
-  text-align: center;
-}
-.manifesto-mark > span {
-  display: block;
-  font-size: 18px;
-  letter-spacing: 10px;
-  font-style: normal;
-  padding-left: 12px;
+.manifesto-logo {
+  width: 100%;
+  max-width: 490px;
 }
 .about-manifesto h2 {
   margin-top: 16px;
@@ -1344,7 +1328,7 @@ select option {
   align-items: start;
 }
 .auth-art {
-  background: #1e2821;
+  background: #202023;
   min-height: 650px;
   align-self: stretch;
   border-radius: 6px;
@@ -1380,9 +1364,16 @@ select option {
 .auth-art-caption {
   position: absolute;
   bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   font-size: 11px;
   letter-spacing: 1.6px;
   color: #b7c4ae;
+}
+.auth-art .auth-art-caption .brand-logo {
+  width: min(260px, 100%);
+  filter: invert(1);
 }
 .auth-form {
   max-width: 450px;
@@ -1832,11 +1823,8 @@ select option {
   .header-inner {
     gap: 20px;
   }
-  .wordmark {
-    font-size: 13px;
-  }
-  .brand-mark {
-    font-size: 24px;
+  .wordmark .brand-logo {
+    width: 198px;
   }
   .header-actions {
     gap: 10px;
@@ -2115,12 +2103,8 @@ select option {
   .header-inner {
     gap: 12px;
   }
-  .wordmark {
-    font-size: 12px;
-    gap: 7px;
-  }
-  .brand-mark {
-    font-size: 24px;
+  .wordmark .brand-logo {
+    width: 182px;
   }
   .header-actions {
     gap: 7px;
@@ -2477,12 +2461,8 @@ select option {
     padding-block: 30px;
     margin-bottom: 40px;
   }
-  .manifesto-mark {
-    font-size: 120px;
-  }
-  .manifesto-mark > span {
-    font-size: 13px;
-    letter-spacing: 8px;
+  .manifesto-logo {
+    max-width: 400px;
   }
   .about-manifesto h2 {
     font-size: 2rem;
@@ -2752,11 +2732,15 @@ select option {
   }
   .footer-top {
     align-items: start;
+    flex-wrap: wrap;
     padding-bottom: 25px;
     gap: 20px;
   }
   .footer-brand {
     font-size: 13px;
+  }
+  .footer-brand .brand-logo {
+    width: 165px;
   }
   .footer-brand > span {
     font-size: 11px;
@@ -2791,12 +2775,8 @@ select option {
   .container {
     width: calc(100% - 28px);
   }
-  .wordmark {
-    font-size: 11px;
-    gap: 5px;
-  }
-  .brand-mark {
-    font-size: 22px;
+  .wordmark .brand-logo {
+    width: 156px;
   }
   .header-actions {
     gap: 4px;

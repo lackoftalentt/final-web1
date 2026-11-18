@@ -1,0 +1,91 @@
+{
+  "generator": "Built-in image_gen",
+  "created": "2026-11-18",
+  "styleReference": "assets/source/studio/r34.png",
+  "masterPrompt": "Use case: product-mockup. Asset type: final website car catalogue photo, landscape 1536x1024. Create a photorealistic high-end automotive studio photograph of a factory-standard 1999 Nissan Skyline GT-R R34 (BNR34), Bayside Blue metallic paint, correct R34 silhouette, factory six-spoke silver wheels and factory rear wing. Entire car in exact orthographic SIDE PROFILE, nose pointing RIGHT, both visible wheels aligned, absolutely no front or rear three-quarter view. Locked camera at wheel-hub height, 85mm lens, car centered at x50%, wheels resting at y74%, entire vehicle occupies 82% of image width, ample breathing space above and below. Seamless charcoal cyclorama background #202023, matte charcoal floor, very subtle contact shadow and restrained soft reflection. Large softbox key above left, soft cool rim lighting and an almost imperceptible lime accent reflection from the site's #d6f36b accent, realistic paint and rubber, premium restrained Japanese tuning archive mood. No props, no people, no lettering, no added logos, no watermarks, no visible studio equipment, no number plates with legible text. This is the master of a SIX-CAR MATCHED STUDIO SERIES: keep background, camera angle, scale, wheel baseline, lighting and framing identical in every image. Output only one car, not a collage.",
+  "variantPrompts": [
+    {
+      "id": "supra",
+      "prompt": "Use case: product-mockup. Asset type: final website car catalogue image, 1536x1024 landscape. The supplied Nissan studio image is a STYLE, LIGHTING, CAMERA AND COMPOSITION reference ONLY. Create a NEW individual photorealistic premium automotive studio image of the car specified below, replacing the Nissan entirely. Match the reference exactly: seamless charcoal #202023 cyclorama, matte floor and soft reflection, large upper-left softbox, cool edge lights and nearly invisible lime accent. Exact clean SIDE PROFILE, nose pointing RIGHT, camera at wheel-hub height, 85mm lens; all of the car and both wheels visible. Match the same car width in frame, same margins, same wheel baseline at y74%, centered horizontally. Realistic factory-correct body, glass, paint, tires, wheels and proportions. This is one member of a six-car identical studio series, so preserve backdrop, framing, exposure and lighting. No humans, no props, no labels, no added lettering, no watermarks, no multi-car collage. Subject: factory-standard 1993 Toyota Supra A80 JZA80 coupe, warm champagne silver metallic paint, correct rounded Mk4 shape, signature large factory rear wing, factory five-spoke silver wheels. Two-door grand tourer. Do not retain any Nissan body features."
+    },
+    {
+      "id": "rx7",
+      "prompt": "Use case: product-mockup. Asset type: final website car catalogue image, 1536x1024 landscape. The supplied Nissan studio image is a STYLE, LIGHTING, CAMERA AND COMPOSITION reference ONLY. Create a NEW individual photorealistic premium automotive studio image of the car specified below, replacing the Nissan entirely. Match the reference exactly: seamless charcoal #202023 cyclorama, matte floor and soft reflection, large upper-left softbox, cool edge lights and nearly invisible lime accent. Exact clean SIDE PROFILE, nose pointing RIGHT, camera at wheel-hub height, 85mm lens; all of the car and both wheels visible. Match the same car width in frame, same margins, same wheel baseline at y74%, centered horizontally. Realistic factory-correct body, glass, paint, tires, wheels and proportions. This is one member of a six-car identical studio series, so preserve backdrop, framing, exposure and lighting. No humans, no props, no labels, no added lettering, no watermarks, no multi-car collage. Subject: factory-standard 1999 Mazda RX-7 FD3S coupe, deep red metallic paint, correct smooth compact FD shape, closed pop-up headlights, factory rear spoiler, factory five-spoke silver wheels. Correct rotary Mazda silhouette. Do not retain any Nissan body features."
+    },
+    {
+      "id": "nsx",
+      "prompt": "Use case: product-mockup. Asset type: final website car catalogue image, 1536x1024 landscape. The supplied Nissan studio image is a STYLE, LIGHTING, CAMERA AND COMPOSITION reference ONLY. Create a NEW individual photorealistic premium automotive studio image of the car specified below, replacing the Nissan entirely. Match the reference exactly: seamless charcoal #202023 cyclorama, matte floor and soft reflection, large upper-left softbox, cool edge lights and nearly invisible lime accent. Exact clean SIDE PROFILE, nose pointing RIGHT, camera at wheel-hub height, 85mm lens; all of the car and both wheels visible. Match the same car width in frame, same margins, same wheel baseline at y74%, centered horizontally. Realistic factory-correct body, glass, paint, tires, wheels and proportions. This is one member of a six-car identical studio series, so preserve backdrop, framing, exposure and lighting. No humans, no props, no labels, no added lettering, no watermarks, no multi-car collage. Subject: factory-standard 1990 Honda NSX NA1, bright Formula Red paint, black roof canopy, correct original mid-engine NSX shape and integrated low rear wing, closed pop-up headlights, original five-spoke silver wheels, two doors and distinctive side intake. Do not retain any Nissan body features."
+    },
+    {
+      "id": "evo",
+      "prompt": "Use case: product-mockup. Asset type: final website car catalogue image, 1536x1024 landscape. The supplied Nissan studio image is a STYLE, LIGHTING, CAMERA AND COMPOSITION reference ONLY. Create a NEW individual photorealistic premium automotive studio image of the car specified below, replacing the Nissan entirely. Match the reference exactly: seamless charcoal #202023 cyclorama, matte floor and soft reflection, large upper-left softbox, cool edge lights and nearly invisible lime accent. Exact clean SIDE PROFILE, nose pointing RIGHT, camera at wheel-hub height, 85mm lens; all of the car and both wheels visible. Match the same car width in frame, same margins, same wheel baseline at y74%, centered horizontally. Realistic factory-correct body, glass, paint, tires, wheels and proportions. This is one member of a six-car identical studio series, so preserve backdrop, framing, exposure and lighting. No humans, no props, no labels, no added lettering, no watermarks, no multi-car collage. Subject: factory-standard 1999 Mitsubishi Lancer Evolution VI GSR CP9A, clean pearl-white paint, FOUR-DOOR sedan, correct Evo VI body and front bumper, square roofline, tall factory rear wing, hood vent and factory multi-spoke silver wheels. Not an Evo VII or newer generation. Do not retain any Nissan body features."
+    },
+    {
+      "id": "sti",
+      "prompt": "Use case: product-mockup. Asset type: final website car catalogue image, 1536x1024 landscape. The supplied Nissan studio image is a STYLE, LIGHTING, CAMERA AND COMPOSITION reference ONLY. Create a NEW individual photorealistic premium automotive studio image of the car specified below, replacing the Nissan entirely. Match the reference exactly: seamless charcoal #202023 cyclorama, matte floor and soft reflection, large upper-left softbox, cool edge lights and nearly invisible lime accent. Exact clean SIDE PROFILE, nose pointing RIGHT, camera at wheel-hub height, 85mm lens; all of the car and both wheels visible. Match the same car width in frame, same margins, same wheel baseline at y74%, centered horizontally. Realistic factory-correct body, glass, paint, tires, wheels and proportions. This is one member of a six-car identical studio series, so preserve backdrop, framing, exposure and lighting. No humans, no props, no labels, no added lettering, no watermarks, no multi-car collage. Subject: factory-standard 1999 Subaru Impreza WRX STI GC8 Version VI, World Rally Blue paint with factory GOLD five-spoke wheels, correct first-generation FOUR-DOOR sedan body, hood scoop and tall rear wing. No racing stickers or rally livery. Not the two-door 22B. Do not retain any Nissan body features."
+    }
+  ],
+  "logo": {
+    "reference": "assets/source/fujiwara-logo-reference.png",
+    "generatedSource": "assets/source/fujiwara-logo-generated.png",
+    "output": "public/branding/fujiwara-logo.png",
+    "prompt": "Edit the provided reference into a clean production logo asset for a Japanese car enthusiast website. Preserve EXACTLY the black Japanese lettering and typography from the reference: 藤原とうふ店（自家用）. Maintain the same bold glyph shapes, relative sizes, horizontal layout and proportions: large 藤原とうふ店 followed by smaller （自家用）. Remove the mouse pointer above the text and remove ALL the white/grey photographic background, gradients, reflections and edge strips. Produce only solid near-black logo lettering with smooth crisp edges on a genuinely transparent background, tightly framed with a modest even safe margin. Do not redesign the lettering. No extra words, symbols or decoration. Reference image is the exact logo to preserve.",
+    "export": "Trimmed empty transparent margins and resized to 1280 × 177; favicon uses the first glyph on white."
+  },
+  "assets": [
+    {
+      "id": "r34",
+      "source": "assets/source/studio/r34.png",
+      "output": "public/media/studio/r34-studio-1114451028c1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 65262,
+      "sha256": "1114451028c13173935b03623fdc52bc269247a4b03c3a0c4bf392f22e9a7811"
+    },
+    {
+      "id": "supra",
+      "source": "assets/source/studio/supra.png",
+      "output": "public/media/studio/supra-studio-a86be32245a3.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 55992,
+      "sha256": "a86be32245a3d4aebaf56a60388e5d5b6972c700d020afe1bd5540bccfb8f25c"
+    },
+    {
+      "id": "rx7",
+      "source": "assets/source/studio/rx7.png",
+      "output": "public/media/studio/rx7-studio-530f286101c7.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 60964,
+      "sha256": "530f286101c7fb33083fee3951300ffe3dced209d78050fbf4a046f5c809af85"
+    },
+    {
+      "id": "nsx",
+      "source": "assets/source/studio/nsx.png",
+      "output": "public/media/studio/nsx-studio-e13b2df594c9.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 58854,
+      "sha256": "e13b2df594c93597785554d14fb65fb60bc493ecae2ff4160fa10588db581760"
+    },
+    {
+      "id": "evo",
+      "source": "assets/source/studio/evo.png",
+      "output": "public/media/studio/evo-studio-a35a23ede8f5.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 57632,
+      "sha256": "a35a23ede8f5cd0f900bcf415341bce5b607e7d00fd636b56eea528ac866cfc1"
+    },
+    {
+      "id": "sti",
+      "source": "assets/source/studio/sti.png",
+      "output": "public/media/studio/sti-studio-b20093d00961.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 68838,
+      "sha256": "b20093d0096168e0e714923118885a1f9fc7d39217af113343b70d945b94b45a"
+    }
+  ]
+}

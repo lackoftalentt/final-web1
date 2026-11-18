@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 import Icon from "./components/Icon.jsx";
+import Brand, { brandName } from "./components/Brand.jsx";
 import { cars } from "./data.js";
 import { Auth, Contact, Profile } from "./pages/Account.jsx";
 import Drive from "./pages/Drive.jsx";
@@ -52,7 +53,7 @@ export default function App() {
       "/profile": "Your garage",
     };
     const car = cars.find((item) => route === `/cars/${item.id}`);
-    document.title = `${car ? `${car.maker} ${car.name}` : titles[route] || "Page not found"} — JDM Legends`;
+    document.title = `${car ? `${car.maker} ${car.name}` : titles[route] || "Page not found"} — ${brandName}`;
     window.scrollTo({ top: 0, behavior: "instant" });
     main.current?.focus({ preventScroll: true });
   }, [route]);
@@ -162,13 +163,8 @@ function Header() {
   return (
     <header className="site-header">
       <div className="container header-inner">
-        <a className="wordmark" href="#/" aria-label="JDM Legends home">
-          <span className="brand-mark">
-            J<span>DM</span>
-          </span>
-          <span>
-            LEGENDS<span className="brand-dot">®</span>
-          </span>
+        <a className="wordmark" href="#/" aria-label={`${brandName} home`}>
+          <Brand />
         </a>
         <nav
           id="main-nav"
@@ -232,8 +228,9 @@ function Footer() {
   return (
     <footer className="site-footer container">
       <div className="footer-top">
-        <a className="footer-brand" href="#/">
-          JDM LEGENDS<span>For the love of the drive.</span>
+        <a className="footer-brand" href="#/" aria-label={`${brandName} home`}>
+          <Brand />
+          <span>For the love of the drive.</span>
         </a>
         <div className="footer-links">
           <a href="#/cars">Collection</a>
@@ -243,7 +240,7 @@ function Footer() {
       </div>
       <div className="footer-bottom">
         <span>
-          © {new Date().getFullYear()} JDM Legends. Team letsgo · SE-2516.
+          © {new Date().getFullYear()} {brandName}. Team letsgo · SE-2516.
         </span>
         <span>An independent enthusiast project.</span>
       </div>

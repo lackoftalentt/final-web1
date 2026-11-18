@@ -8,6 +8,7 @@ import Field from "../components/Field.jsx";
 import Icon from "../components/Icon.jsx";
 import CarCard from "../components/CarCard.jsx";
 import CarArt from "../components/CarArt.jsx";
+import Brand, { brandName } from "../components/Brand.jsx";
 
 function focusFirstError(form) {
   requestAnimationFrame(() =>
@@ -100,7 +101,8 @@ export function Auth({ kind }) {
           <CarArt car={cars[2]} />
         </div>
         <span className="auth-art-caption">
-          JDM LEGENDS / FOR THE LOVE OF THE DRIVE
+          <Brand />
+          <span>FOR THE LOVE OF THE DRIVE</span>
         </span>
       </div>
       <div className="auth-form">
@@ -275,7 +277,7 @@ export function Contact() {
           </div>
           <h2>Let’s talk cars.</h2>
           <p>
-            We’re Dastan and Beibarys, the team behind JDM Legends. This space
+            We’re Dastan and Beibarys, the team behind {brandName}. This space
             is for the people who notice the details.
           </p>
           <dl>
